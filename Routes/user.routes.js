@@ -22,7 +22,7 @@ userRouter.use('/:id',
 userRouter.get('/:id',
     userController.getStudentById);
 userRouter.put('/:id',
-    validationUserMiddleware.isStudentBodyCorrect,
+    validationUserMiddleware.isBodyForUpdateCorrect,
     userController.updateStudent);
 userRouter.delete('/:id',
     userController.deleteStudent);
