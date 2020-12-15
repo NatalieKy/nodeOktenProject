@@ -20,8 +20,10 @@ module.exports = {
             },
             gender: {
                 type: Sequelize.DataTypes.STRING,
-                isIn: [['male',
-                    'female']],
+                isIn: [[
+                    'male',
+                    'female'
+                ]],
                 allowNull: false
             },
             email: {

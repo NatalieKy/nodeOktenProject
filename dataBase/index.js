@@ -22,13 +22,13 @@ module.exports = (() => {
                     models[model] = modelFile(client, DataTypes);
                 });
             });
-        };
+        }
 
         return {
             setModels: () => getModels(),
             getModel: (modelName) => models[modelName]
         };
-    };
+    }
 
     return {
         getInstance: () => {

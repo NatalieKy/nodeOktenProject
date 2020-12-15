@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const {  EMAIL, PASSWORD } = require('../../configs/RegExs');
+const { EMAIL, PASSWORD } = require('../../configs/RegExs');
 
 module.exports = Joi.object({
     email: Joi.string()

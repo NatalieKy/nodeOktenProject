@@ -11,6 +11,6 @@ module.exports = {
             throw new ErrorHandler(NOT_VALID_CREDENTIALS.message, NOT_VALID_CREDENTIALS.code);
         }
 
-        return isPasswordTrue
+        return isPasswordTrue;
     }
 };

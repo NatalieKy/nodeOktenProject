@@ -18,8 +18,10 @@ module.exports = (client, DataTypes) => {
         },
         gender: {
             type: DataTypes.STRING,
-            isIn: [['male',
-                'female']],
+            isIn: [[
+                'male',
+                'female'
+            ]],
             allowNull: false
         },
         email: {

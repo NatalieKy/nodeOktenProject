@@ -2,7 +2,7 @@ const { Router } = require('express');
 const { userMiddleware } = require('../Middleware');
 const { carController } = require('../Controllers');
 const { validationCarMiddleware } = require('../Middleware/car/Validation');
-const { validationUserMiddleware } = require('../Middleware/user/Validation')
+const { validationUserMiddleware } = require('../Middleware/user/Validation');
 
 const carRouter = Router();
 

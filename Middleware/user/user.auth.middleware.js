@@ -1,5 +1,5 @@
 const { ErrorHandler, errorTypes: { UNAUTHORIZED } } = require('../../Errors');
-const { passwordChanger: { passwordEqualityChecker } } = require('../../utilities')
+const { passwordChanger: { passwordEqualityChecker } } = require('../../utilities');
 
 module.exports = {
     isStudentLogged: async (req, res, next) => {
@@ -11,7 +11,7 @@ module.exports = {
                 throw new ErrorHandler(UNAUTHORIZED.message, UNAUTHORIZED.code);
             }
 
-            if( student.email !== email || !(await passwordEqualityChecker(password, student.password))) {
+            if (student.email !== email || !(await passwordEqualityChecker(password, student.password))) {
                 throw new ErrorHandler(UNAUTHORIZED.message, UNAUTHORIZED.code);
             }
 
@@ -20,4 +20,4 @@ module.exports = {
             next(e);
         }
     },
-}
+};

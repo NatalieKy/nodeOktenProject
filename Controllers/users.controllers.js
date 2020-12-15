@@ -6,9 +6,9 @@ const { passwordHasher } = require('../utilities/password.hasher');
 module.exports = {
     createStudent: async (req, res, next) => {
         try {
-            const studentPassword = await passwordHasher(req.body.password)
+            const studentPassword = await passwordHasher(req.body.password);
 
-            await userService.createSingleStudent({ ...req.body}, studentPassword );
+            await userService.createSingleStudent({ ...req.body }, studentPassword);
 
             res.sendStatus(CREATED);
         } catch (e) {

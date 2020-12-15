@@ -53,7 +53,7 @@ module.exports = {
         });
     },
 
-    updateSingleStudent: (studentId, updatedStudent, updatedPassword ) => {
+    updateSingleStudent: (studentId, updatedStudent, updatedPassword) => {
         const Student = database.getModel('Student');
 
         return Student.update({

@@ -1,4 +1,6 @@
-const { BAD_REQUEST, FORBIDDEN, NOT_FOUND, INTERNAL_SERVER_ERROR, UNAUTHORIZED } = require('../configs/httpStatusCodes');
+const {
+    BAD_REQUEST, FORBIDDEN, NOT_FOUND, INTERNAL_SERVER_ERROR, UNAUTHORIZED
+} = require('../configs/httpStatusCodes');
 
 module.exports = {
     EMAIL_ALREADY_USED: {
