@@ -1,6 +1,6 @@
 const { ErrorHandler } = require('../../Errors');
 const { BAD_REQUEST } = require('../../configs/httpStatusCodes');
-const { userValidator: { userIdValidator, userBodyValidator } } = require('../../Validators');
+const { userIdValidator, userBodyValidator } = require('../../Validators/users');
 
 module.exports = {
     isIdCorrect: (req, res, next) => {
@@ -29,5 +29,5 @@ module.exports = {
         } catch (e) {
             next(e);
         }
-    },
+    }
 };
