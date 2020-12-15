@@ -7,12 +7,12 @@ module.exports = {
             const student = req.student.dataValues;
             const { email, password } = req.body;
 
-            if(!email || !password ) {
-                throw new ErrorHandler(UNAUTHORIZED.message, UNAUTHORIZED.code)
+            if (!email || !password) {
+                throw new ErrorHandler(UNAUTHORIZED.message, UNAUTHORIZED.code);
             }
 
             if( student.email !== email || !(await passwordEqualityChecker(password, student.password))) {
-                throw new ErrorHandler(UNAUTHORIZED.message, UNAUTHORIZED.code)
+                throw new ErrorHandler(UNAUTHORIZED.message, UNAUTHORIZED.code);
             }
 
             next();

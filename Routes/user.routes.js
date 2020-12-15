@@ -24,7 +24,6 @@ userRouter.put('/:id',
     validationUserMiddleware.isStudentBodyCorrect,
     userController.updateStudent);
 userRouter.delete('/:id',
-
     userController.deleteStudent);
 
 module.exports = userRouter;
