@@ -7,5 +7,12 @@ module.exports = Joi.object({
         .regex(EMAIL)
         .required(),
     password: Joi.string()
-        .regex(PASSWORD),
+        .regex(PASSWORD)
+        .required(),
+    name: Joi.string()
+        .optional(),
+    age: Joi.number()
+        .optional(),
+    gender: Joi.string()
+        .optional(),
 });
