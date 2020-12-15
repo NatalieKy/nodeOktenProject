@@ -1,4 +1,4 @@
-const { BAD_REQUEST, FORBIDDEN, NOT_FOUND, INTERNAL_SERVER_ERROR } = require('../configs/httpStatusCodes');
+const { BAD_REQUEST, FORBIDDEN, NOT_FOUND, INTERNAL_SERVER_ERROR, UNAUTHORIZED } = require('../configs/httpStatusCodes');
 
 module.exports = {
     EMAIL_ALREADY_USED: {
@@ -52,5 +52,9 @@ module.exports = {
     NO_CONNECTION_WITH_DATABASE: {
         message: 'No response from database',
         code: INTERNAL_SERVER_ERROR
+    },
+    UNAUTHORIZED: {
+        message: 'Authorization failed',
+        code: UNAUTHORIZED
     }
 };

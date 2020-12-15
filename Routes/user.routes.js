@@ -3,6 +3,7 @@ const { Router } = require('express');
 const { userController } = require('../Controllers');
 const { userMiddleware } = require('../Middleware');
 const { validationUserMiddleware } = require('../Middleware/Validation');
+const { userAuthMiddleware } = require('../Middleware/')
 
 const userRouter = Router();
 
@@ -14,7 +15,8 @@ userRouter.post('/',
 
 userRouter.use('/:id',
     validationUserMiddleware.isIdCorrect,
-    userMiddleware.isIdPresent,);
+    userMiddleware.isIdPresent,
+    userAuthMiddleware.isStudentLogged);
 
 userRouter.get('/:id',
     userController.getStudentById);
@@ -22,6 +24,7 @@ userRouter.put('/:id',
     validationUserMiddleware.isStudentBodyCorrect,
     userController.updateStudent);
 userRouter.delete('/:id',
+
     userController.deleteStudent);
 
 module.exports = userRouter;

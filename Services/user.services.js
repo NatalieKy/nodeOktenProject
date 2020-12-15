@@ -44,7 +44,6 @@ module.exports = {
 
     createSingleStudent: (student, hashedPassword) => {
         const Student = database.getModel('Student');
-
         return Student.create({
             name: student.name,
             email: student.email,
@@ -54,7 +53,7 @@ module.exports = {
         });
     },
 
-    updateSingleStudent: (studentId, newPassword, updatedStudent) => {
+    updateSingleStudent: (studentId, updatedStudent, updatedPassword ) => {
         const Student = database.getModel('Student');
 
         return Student.update({
@@ -62,7 +61,7 @@ module.exports = {
             email: updatedStudent.email,
             age: updatedStudent.age,
             gender: updatedStudent.gender,
-            password: newPassword,
+            password: updatedPassword,
         }, { where: { id: studentId } });
     },
 
