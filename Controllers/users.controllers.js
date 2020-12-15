@@ -58,7 +58,7 @@ module.exports = {
 
             await userService.deleteStudent(userId);
 
-            res.status(NO_CONTENT).json('User deleted successfully');
+            res.status(NO_CONTENT);
         } catch (e) {
             next(e);
         }
