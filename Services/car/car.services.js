@@ -1,4 +1,4 @@
-const database = require('../dataBase').getInstance();
+const database = require('../../dataBase').getInstance();
 
 module.exports = {
     createNewStudentsCar: (id, car) => {

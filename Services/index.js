@@ -1,4 +1,5 @@
 module.exports = {
-    userService: require('./user.services'),
-    carService: require('./car.services')
+    carService: require('./car'),
+    studentService: require('./student'),
+    tokenService: require('./tokens')
 };

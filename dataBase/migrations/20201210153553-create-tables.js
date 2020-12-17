@@ -51,16 +51,51 @@ module.exports = {
                 type: Sequelize.DataTypes.INTEGER,
                 allowNull: false,
                 foreignKey: true,
-                reference: {
-                    model: 'Student',
+                onDelete: 'CASCADE',
+                onUpdate: 'CASCADE',
+                references: {
+                    model: 'students',
                     key: 'id'
                 },
             }
         },);
+
+        await queryInterface.createTable('o_auth', {
+            id: {
+                type: Sequelize.DataTypes.INTEGER,
+                primaryKey: true,
+                autoIncrement: true,
+                allowNull: false
+            },
+            accessToken: {
+                type: Sequelize.DataTypes.STRING,
+                allowNull: false
+            },
+            refreshToken: {
+                type: Sequelize.DataTypes.STRING,
+                allowNull: false
+            },
+            studentID: {
+                type: Sequelize.DataTypes.INTEGER,
+                allowNull: false,
+                foreignKey: true,
+                onDelete: 'CASCADE',
+                onUpdate: 'CASCADE',
+                references: {
+                    model: 'students',
+                    key: 'id'
+                },
+            },
+            created_at: {
+                type: Sequelize.DataTypes.DATE,
+                defaultValue: Sequelize.fn('NOW')
+            }
+        });
     },
 
     down: async (queryInterface) => {
         await queryInterface.dropTable('students');
         await queryInterface.dropTable('cars');
+        await queryInterface.dropTable('o_auth');
     }
 };

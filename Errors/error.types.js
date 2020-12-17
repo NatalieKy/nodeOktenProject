@@ -58,5 +58,13 @@ module.exports = {
     UNAUTHORIZED: {
         message: 'Authorization failed',
         code: UNAUTHORIZED
+    },
+    FORBIDDEN: {
+        message: 'Access denied',
+        code: FORBIDDEN
+    },
+    INVALID_TOKEN: {
+        message: 'Token is invalid',
+        code: UNAUTHORIZED
     }
 };

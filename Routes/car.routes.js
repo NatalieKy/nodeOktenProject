@@ -1,15 +1,15 @@
 const { Router } = require('express');
-const { userMiddleware } = require('../Middleware');
-const { carController } = require('../Controllers');
+const { studentMiddleware } = require('../Middleware/student');
+const { carController } = require('../Controllers/car');
 const { validationCarMiddleware } = require('../Middleware/car/Validation');
-const { validationUserMiddleware } = require('../Middleware/user/Validation');
+const { validationStudentMiddleware } = require('../Middleware/student/Validation');
 
 const carRouter = Router();
 
 carRouter.post('/:id',
     validationCarMiddleware.isCarBodyCorrect,
-    validationUserMiddleware.isIdCorrect,
-    userMiddleware.isIdPresent,
+    validationStudentMiddleware.isIdCorrect,
+    studentMiddleware.isIdPresent,
     carController.createNewStudentsCar);
 carRouter.get('/', carController.getCars);
 

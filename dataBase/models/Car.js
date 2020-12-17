@@ -11,7 +11,11 @@ module.exports = (client, DataTypes) => {
         },
         student_id: {
             type: DataTypes.INTEGER,
-            foreignKey: true
+            foreignKey: true,
+            references: {
+                model: 'students',
+                key: 'id'
+            }
         }
     }, {
         tableName: 'cars',

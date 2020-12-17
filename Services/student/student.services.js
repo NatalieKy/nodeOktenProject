@@ -1,24 +1,26 @@
-const database = require('../dataBase').getInstance();
+const database = require('../../dataBase').getInstance();
 
 module.exports = {
+    // getStudentsWithCars: () => {
+    //     const Student = database.getModel('Student');
+    //     const Car = database.getModel('Car');
+    //     return Student.findAll({
+    //         include: { model: Car }
+    //     });
+    // },
+
     getStudents: () => {
         const Student = database.getModel('Student');
-
-        const Car = database.getModel('Car');
-        return Student.findAll({
-            include: { model: Car }
-        });
+        return Student.findAll();
     },
 
     getSingleStudent: (studentId) => {
         const Student = database.getModel('Student');
-
         const Car = database.getModel('Car');
-        return Student.findByPk({
-            include: {
-                model: Car,
-                where: { id: studentId }
-            }
+
+        return Student.findOne({
+            where: { id: studentId },
+            include: [{ model: Car }]
         });
     },
 
@@ -32,12 +34,12 @@ module.exports = {
         });
     },
 
-    idChecker: (studentId) => {
+    idChecker: (studentID) => {
         const Student = database.getModel('Student');
 
         return Student.findOne({
             where: {
-                id: studentId
+                id: studentID
             }
         });
     },
@@ -53,7 +55,7 @@ module.exports = {
         });
     },
 
-    updateSingleStudent: (studentId, updatedStudent, updatedPassword) => {
+    updateSingleStudent: (updatedStudent, studentId, newPassword) => {
         const Student = database.getModel('Student');
 
         return Student.update({
@@ -61,7 +63,7 @@ module.exports = {
             email: updatedStudent.email,
             age: updatedStudent.age,
             gender: updatedStudent.gender,
-            password: updatedPassword,
+            password: newPassword
         }, { where: { id: studentId } });
     },
 

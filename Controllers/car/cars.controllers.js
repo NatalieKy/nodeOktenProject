@@ -1,5 +1,5 @@
-const { carService } = require('../Services');
-const { CREATED, OK } = require('../configs/httpStatusCodes');
+const { carService } = require('../../Services');
+const { CREATED, OK } = require('../../configs/httpStatusCodes');
 
 module.exports = {
     createNewStudentsCar: async (req, res, next) => {
