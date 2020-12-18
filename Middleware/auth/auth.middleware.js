@@ -46,7 +46,7 @@ module.exports = {
                 }
             });
 
-            const studentWithAccessToken = (await tokenService.getAccessToken(accessToken));
+            const studentWithAccessToken = (await tokenService.getAccessTokenAndStudent(accessToken));
             const { id } = studentWithAccessToken.dataValues;
 
             if (!studentWithAccessToken) {
@@ -58,6 +58,41 @@ module.exports = {
             }
 
             req.studentWithToken = studentWithAccessToken;
+
+            next();
+        } catch (e) {
+            next(e);
+        }
+    },
+
+    isRefreshTokenTrue: async (req, res, next) => {
+        try {
+            const refreshToken = req.get('Authorization');
+            const { student_id } = req.params;
+
+            if (!refreshToken) {
+                throw new ErrorHandler(INVALID_TOKEN.message, INVALID_TOKEN.code);
+            }
+
+            jwt.verify(refreshToken, 'secondKey', (err) => {
+                if (err) {
+                    throw new ErrorHandler(INVALID_TOKEN.message, INVALID_TOKEN.code);
+                }
+            });
+
+            const studentWithRefreshToken = (await tokenService.getRefreshTokenAndStudent(refreshToken));
+
+            if (!studentWithRefreshToken) {
+                throw new ErrorHandler(INVALID_TOKEN.message, INVALID_TOKEN.code);
+            }
+
+            const { id } = studentWithRefreshToken.dataValues;
+
+            if (id !== +student_id) {
+                throw new ErrorHandler(FORBIDDEN.message, FORBIDDEN.code);
+            }
+
+            req.refreshInfo = { id };
 
             next();
         } catch (e) {

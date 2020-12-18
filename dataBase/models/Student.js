@@ -50,7 +50,7 @@ module.exports = (client, DataTypes) => {
         onDelete: 'cascade',
         onUpdate: 'cascade'
     });
-    Student.hasMany(OAuth, {
+    Student.hasOne(OAuth, {
         foreignKey: 'studentID',
         onDelete: 'cascade',
         onUpdate: 'cascade'

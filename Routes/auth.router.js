@@ -6,6 +6,9 @@ const { authValidationMiddleware } = require('../Middleware/auth');
 
 const authRouter = Router();
 
+authRouter.post('/:student_id/refresh',
+    authMiddleware.isRefreshTokenTrue,
+    authController.useRefreshToken);
 authRouter.post('/',
     authValidationMiddleware.areCredentialsCorrect,
     authMiddleware.areCredentialsTrue,
