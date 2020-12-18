@@ -2,14 +2,14 @@ const { Router } = require('express');
 
 const { studentController } = require('../Controllers/student');
 const { studentMiddleware } = require('../Middleware/student');
-const { validationStudentMiddleware } = require('../Middleware/student/Validation');
-const { authMiddleware } = require('../Middleware');
+const { studentValidationMiddleware } = require('../Middleware/student');
+const { authMiddleware } = require('../Middleware/auth');
 
 const studentRouter = Router();
 
 studentRouter.get('/', studentController.getStudents);
 studentRouter.post('/',
-    validationStudentMiddleware.isStudentForCreateBodyCorrect,
+    studentValidationMiddleware.isStudentForCreateBodyCorrect,
     studentMiddleware.isStudentPresent,
     studentController.createStudent);
 
@@ -18,13 +18,13 @@ studentRouter.post('/',
 
 studentRouter.use('/:id',
     authMiddleware.isAccessTokenAndIdTrue,
-    validationStudentMiddleware.isIdCorrect,
+    studentValidationMiddleware.isIdCorrect,
     studentMiddleware.isIdPresent);
 
 studentRouter.get('/:id',
     studentController.getStudentById);
 studentRouter.put('/:id',
-    validationStudentMiddleware.isBodyForUpdateCorrect,
+    studentValidationMiddleware.isBodyForUpdateCorrect,
     studentController.updateStudent);
 studentRouter.delete('/:id',
     studentController.deleteStudent);

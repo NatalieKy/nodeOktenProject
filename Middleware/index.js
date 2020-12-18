@@ -1,5 +1,5 @@
 module.exports = {
+    authMiddleware: require('./auth'),
+    carMiddleware: require('./car'),
     studentMiddleware: require('./student'),
-    validationMiddleware: require('./student/Validation'),
-    authMiddleware: require('./auth')
 };

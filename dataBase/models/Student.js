@@ -35,7 +35,12 @@ module.exports = (client, DataTypes) => {
         }
     }, {
         tableName: 'students',
-        timestamps: false
+        timestamps: false,
+        scopes: {
+            noPassword: {
+                attributes: { exclude: ['password'] },
+            }
+        }
     });
 
     const Car = require('./Car')(client, DataTypes);

@@ -19,6 +19,12 @@ module.exports = {
         try {
             const studentId = req.params.id;
             const { password, ...user } = req.body;
+
+            if (!password) {
+                await studentService.updateSingleStudent(user, studentId);
+                return res.sendStatus(OK);
+            }
+
             const newPassword = await passwordHasher(password);
 
             await studentService.updateSingleStudent(user, studentId, newPassword);
@@ -33,21 +39,7 @@ module.exports = {
         try {
             const students = await studentService.getStudents();
 
-            students.forEach((student) => {
-                delete student.dataValues.password;
-                delete student.dataValues.email;
-            });
             res.json(students);
-        } catch (e) {
-            next(e);
-        }
-    },
-
-    getStudentsAndCars: async (req, res, next) => {
-        try {
-            const studentsWithCars = await studentService.getStudentsWithCars();
-
-            res.json(studentsWithCars);
         } catch (e) {
             next(e);
         }

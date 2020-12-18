@@ -1,8 +1,8 @@
-const { ErrorHandler } = require('../../../Errors');
-const { BAD_REQUEST } = require('../../../configs/httpStatusCodes');
+const { ErrorHandler } = require('../../Errors');
+const { BAD_REQUEST } = require('../../configs/httpStatusCodes');
 const {
-    studentBodyForCreateValidator, studentBodyForUpdateValidator, studentCredentialsValidator, studentIdValidator
-} = require('../../../joiValidators/student');
+    studentBodyForCreateValidator, studentBodyForUpdateValidator, studentIdValidator
+} = require('../../joiValidators/student');
 
 module.exports = {
     isStudentForCreateBodyCorrect: (req, res, next) => {
@@ -20,6 +20,7 @@ module.exports = {
 
     isBodyForUpdateCorrect: (req, res, next) => {
         try {
+            console.log(req.body);
             const { error } = studentBodyForUpdateValidator.validate(req.body);
 
             if (error) {
@@ -40,18 +41,6 @@ module.exports = {
             }
 
             req.studentId = req.params;
-            next();
-        } catch (e) {
-            next(e);
-        }
-    },
-    areCredentialsCorrect: (req, res, next) => {
-        try {
-            const { error } = studentCredentialsValidator.validate(req.body);
-
-            if (error) {
-                throw new ErrorHandler(error.details[0].message, BAD_REQUEST);
-            }
             next();
         } catch (e) {
             next(e);

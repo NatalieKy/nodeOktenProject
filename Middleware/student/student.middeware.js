@@ -5,7 +5,7 @@ module.exports = {
     isStudentPresent: async (req, res, next) => {
         try {
             const { email } = req.body;
-            const isStudentInDB = await studentService.checkStudent(email);
+            const isStudentInDB = await studentService.checkStudentByEmail(email);
 
             if (isStudentInDB) {
                 throw new ErrorHandler(EMAIL_ALREADY_USED.message, EMAIL_ALREADY_USED.code);

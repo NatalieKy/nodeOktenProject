@@ -11,36 +11,16 @@ module.exports = {
 
     getStudents: () => {
         const Student = database.getModel('Student');
-        return Student.findAll();
+        return Student.scope('noPassword').findAll();
     },
 
     getSingleStudent: (studentId) => {
         const Student = database.getModel('Student');
         const Car = database.getModel('Car');
 
-        return Student.findOne({
+        return Student.scope('noPassword').findOne({
             where: { id: studentId },
             include: [{ model: Car }]
-        });
-    },
-
-    checkStudent: (userEmail) => {
-        const Student = database.getModel('Student');
-
-        return Student.findOne({
-            where: {
-                email: userEmail
-            }
-        });
-    },
-
-    idChecker: (studentID) => {
-        const Student = database.getModel('Student');
-
-        return Student.findOne({
-            where: {
-                id: studentID
-            }
         });
     },
 
@@ -75,5 +55,25 @@ module.exports = {
                 id: studentId
             }
         });
-    }
+    },
+
+    checkStudentByEmail: (userEmail) => {
+        const Student = database.getModel('Student');
+
+        return Student.findOne({
+            where: {
+                email: userEmail
+            }
+        });
+    },
+
+    idChecker: (studentID) => {
+        const Student = database.getModel('Student');
+
+        return Student.findOne({
+            where: {
+                id: studentID
+            }
+        });
+    },
 };

@@ -1,4 +1,4 @@
 module.exports = {
-    areCredsTrue: require('./areCredentialsTrue.middleware'),
-    isAccessTokenAndIdTrue: require('./isAccessTokenAndIdTrue.middleware')
+    authMiddleware: require('./auth.middleware'),
+    authValidationMiddleware: require('./auth.validation.middleware')
 };
