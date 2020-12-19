@@ -16,6 +16,10 @@ module.exports = (client, DataTypes) => {
                 model: 'students',
                 key: 'id'
             }
+        },
+        price: {
+            type: DataTypes.DECIMAL,
+            allowNull: false
         }
     }, {
         tableName: 'cars',

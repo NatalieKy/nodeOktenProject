@@ -15,7 +15,7 @@ module.exports = (client, DataTypes) => {
         },
         created_at: {
             type: DataTypes.DATE,
-            default: client.fn('NOW')
+            defaultValue: client.NOW
         },
         studentID: {
             type: DataTypes.NUMBER,

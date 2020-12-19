@@ -47,6 +47,10 @@ module.exports = {
                 type: Sequelize.DataTypes.STRING,
                 allowNull: false,
             },
+            price: {
+                type: Sequelize.DataTypes.DECIMAL,
+                allowNull: false
+            },
             student_id: {
                 type: Sequelize.DataTypes.INTEGER,
                 allowNull: false,

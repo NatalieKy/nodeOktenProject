@@ -27,6 +27,7 @@ module.exports = {
             Object.assign(newTokens, { studentID: id });
 
             await tokenService.createTokens(newTokens);
+
             res.json(newTokens);
         } catch (e) {
             next(e);
