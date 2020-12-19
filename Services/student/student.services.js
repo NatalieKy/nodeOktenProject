@@ -1,14 +1,6 @@
 const database = require('../../dataBase').getInstance();
 
 module.exports = {
-    // getStudentsWithCars: () => {
-    //     const Student = database.getModel('Student');
-    //     const Car = database.getModel('Car');
-    //     return Student.findAll({
-    //         include: { model: Car }
-    //     });
-    // },
-
     getStudents: () => {
         const Student = database.getModel('Student');
         return Student.scope('noPassword').findAll();

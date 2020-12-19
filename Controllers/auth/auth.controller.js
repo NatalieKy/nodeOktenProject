@@ -18,13 +18,13 @@ module.exports = {
 
     useRefreshToken: async (req, res, next) => {
         try {
-            const { id } = req.refreshInfo;
+            const { student_id } = req.refreshInfo;
 
-            await tokenService.deleteTokens(id);
+            await tokenService.deleteTokens(student_id);
 
             const newTokens = tokensCreator();
 
-            Object.assign(newTokens, { studentID: id });
+            Object.assign(newTokens, { studentID: student_id });
 
             await tokenService.createTokens(newTokens);
 

@@ -1,5 +1,5 @@
 const {
-    BAD_REQUEST, FORBIDDEN, NOT_FOUND, INTERNAL_SERVER_ERROR, UNAUTHORIZED
+    BAD_REQUEST, FORBIDDEN, NOT_FOUND, INTERNAL_SERVER_ERROR, UNAUTHORIZED, METHOD_NOT_ALLOWED
 } = require('../configs/httpStatusCodes');
 
 module.exports = {
@@ -70,5 +70,9 @@ module.exports = {
     INVALID_TOKEN: {
         message: 'Token is invalid',
         code: UNAUTHORIZED
+    },
+    METHOD_NOT_ALLOWED: {
+        message: 'Not allowed, user is already logged in',
+        code: METHOD_NOT_ALLOWED
     }
 };

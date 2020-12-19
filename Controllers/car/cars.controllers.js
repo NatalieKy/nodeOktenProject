@@ -1,5 +1,5 @@
 const { carService } = require('../../Services/car');
-const { CREATED, OK } = require('../../configs/httpStatusCodes');
+const { CREATED, OK, NO_CONTENT } = require('../../configs/httpStatusCodes');
 
 module.exports = {
     createNewCar: async (req, res, next) => {
@@ -55,7 +55,7 @@ module.exports = {
 
             await carService.deleteCar(car_id);
 
-            res.json(OK);
+            res.json(NO_CONTENT);
         } catch (e) {
             next(e);
         }

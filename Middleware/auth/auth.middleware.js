@@ -1,6 +1,10 @@
 const jwt = require('jsonwebtoken');
 
-const { ErrorHandler, errorTypes: { UNAUTHORIZED, INVALID_TOKEN, FORBIDDEN } } = require('../../Errors');
+const {
+    ErrorHandler, errorTypes: {
+        UNAUTHORIZED, INVALID_TOKEN, FORBIDDEN, METHOD_NOT_ALLOWED
+    }
+} = require('../../Errors');
 const { passwordEqualityChecker } = require('../../utilities/password.hasher');
 const { checkStudentByEmail } = require('../../Services/student/student.services');
 const { tokenService } = require('../../Services/tokens');
@@ -31,6 +35,21 @@ module.exports = {
         }
     },
 
+    isStudentAlreadyLogged: async (req, res, next) => {
+        try {
+            const { email } = req.body;
+            const student = await tokenService.getStudentWithTokens(email);
+
+            if (student.OAuth !== null) {
+                throw new ErrorHandler(METHOD_NOT_ALLOWED.message, METHOD_NOT_ALLOWED.code);
+            }
+
+            next();
+        } catch (e) {
+            next(e);
+        }
+    },
+
     isAccessTokenAndIdTrue: async (req, res, next) => {
         try {
             const accessToken = req.get('Authorization');
@@ -42,16 +61,18 @@ module.exports = {
 
             jwt.verify(accessToken, 'firstKey', (err) => {
                 if (err) {
+                    console.log(accessToken);
                     throw new ErrorHandler(INVALID_TOKEN.message, INVALID_TOKEN.code);
                 }
             });
 
             const studentWithAccessToken = (await tokenService.getAccessTokenAndStudent(accessToken));
-            const { id } = studentWithAccessToken.dataValues;
 
             if (!studentWithAccessToken) {
                 throw new ErrorHandler(INVALID_TOKEN.message, INVALID_TOKEN.code);
             }
+
+            const { id } = studentWithAccessToken.dataValues;
 
             if (id !== +parameterID) {
                 throw new ErrorHandler(FORBIDDEN.message, FORBIDDEN.code);
@@ -92,7 +113,7 @@ module.exports = {
                 throw new ErrorHandler(FORBIDDEN.message, FORBIDDEN.code);
             }
 
-            req.refreshInfo = { id };
+            req.refreshInfo = { student_id };
 
             next();
         } catch (e) {

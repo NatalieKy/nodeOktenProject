@@ -1,6 +1,11 @@
 const dataBase = require('../../dataBase').getInstance();
 
 module.exports = {
+    // createTokens: (tokens) => {
+    //     const OAuth = dataBase.getModel('OAuth');
+    //
+    //     return OAuth.create(tokens);
+    // },
     createTokens: (tokens) => {
         const OAuth = dataBase.getModel('OAuth');
 
@@ -15,6 +20,18 @@ module.exports = {
             include: {
                 model: OAuth,
                 where: { accessToken }
+            }
+        });
+    },
+
+    getStudentWithTokens: (email) => {
+        const OAuth = dataBase.getModel('OAuth');
+        const Student = dataBase.getModel('Student');
+
+        return Student.findOne({
+            where: { email },
+            include: {
+                model: OAuth
             }
         });
     },

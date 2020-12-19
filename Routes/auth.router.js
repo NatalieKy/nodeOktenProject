@@ -12,6 +12,7 @@ authRouter.post('/:student_id/refresh',
 authRouter.post('/',
     authValidationMiddleware.areCredentialsCorrect,
     authMiddleware.areCredentialsTrue,
+    authMiddleware.isStudentAlreadyLogged,
     authController.logination);
 
 module.exports = authRouter;

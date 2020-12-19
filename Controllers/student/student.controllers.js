@@ -17,7 +17,7 @@ module.exports = {
 
     updateStudent: async (req, res, next) => {
         try {
-            const studentId = req.params.id;
+            const studentId = req.params.student_id;
             const { password, ...user } = req.body;
 
             if (!password) {
