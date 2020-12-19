@@ -1,13 +1,10 @@
 const database = require('../../dataBase').getInstance();
 
 module.exports = {
-    createCar: (student_id, car) => {
+    createCar: (car) => {
         const Car = database.getModel('Car');
 
-        return Car.create({
-            name: car.name,
-            student_id
-        });
+        return Car.create(car);
     },
 
     getAllCars: () => {
@@ -17,10 +14,10 @@ module.exports = {
         });
     },
 
-    getSingleCar: (carID) => {
+    getSingleCar: (id) => {
         const Car = database.getModel('Car');
 
-        return Car.findByPk(carID);
+        return Car.findByPk(id);
     },
 
     deleteCar: (id) => {

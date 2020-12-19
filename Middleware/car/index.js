@@ -1,4 +1,4 @@
 module.exports = {
-    carMiddleware: {},
+    carMiddleware: require('./car.middleware'),
     carValidationMiddleware: require('./car.validation.middleware')
 };

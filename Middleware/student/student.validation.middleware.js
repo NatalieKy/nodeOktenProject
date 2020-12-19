@@ -20,7 +20,6 @@ module.exports = {
 
     isBodyForUpdateCorrect: (req, res, next) => {
         try {
-            console.log(req.body);
             const { error } = studentBodyForUpdateValidator.validate(req.body);
 
             if (error) {
@@ -34,13 +33,14 @@ module.exports = {
 
     isIdCorrect: (req, res, next) => {
         try {
-            const { error } = studentIdValidator.validate(req.params.id);
+            const { student_id } = req.params;
+            const { error } = studentIdValidator.validate(req.params.student_id);
 
             if (error) {
                 throw new ErrorHandler(error.details[0].message, BAD_REQUEST);
             }
 
-            req.studentId = req.params;
+            req.studentId = student_id;
             next();
         } catch (e) {
             next(e);

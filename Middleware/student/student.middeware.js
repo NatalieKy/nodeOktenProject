@@ -19,8 +19,8 @@ module.exports = {
 
     isIdPresent: async (req, res, next) => {
         try {
-            const { id } = req.params;
-            const student = await studentService.idChecker(id);
+            const { student_id } = req.params;
+            const student = await studentService.idChecker(student_id);
 
             if (!student) {
                 throw new ErrorHandler(NO_USER_FOUND.message, NO_USER_FOUND.code);

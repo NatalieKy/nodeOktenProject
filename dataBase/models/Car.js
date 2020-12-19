@@ -9,6 +9,10 @@ module.exports = (client, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
+        price: {
+            type: DataTypes.DECIMAL,
+            allowNull: false
+        },
         student_id: {
             type: DataTypes.INTEGER,
             foreignKey: true,
@@ -16,10 +20,6 @@ module.exports = (client, DataTypes) => {
                 model: 'students',
                 key: 'id'
             }
-        },
-        price: {
-            type: DataTypes.DECIMAL,
-            allowNull: false
         }
     }, {
         tableName: 'cars',

@@ -5,8 +5,10 @@ module.exports = {
     createNewCar: async (req, res, next) => {
         try {
             const car = req.body;
-            const { id } = req.params;
-            const newCar = await carService.createCar(id, car);
+            const { student_id } = req.params;
+
+            Object.assign(car, { student_id });
+            const newCar = await carService.createCar(car);
 
             res.status(CREATED).json(newCar);
         } catch (e) {
@@ -24,11 +26,9 @@ module.exports = {
         }
     },
 
-    getSingleCar: async (req, res, next) => {
+    getSingleCar: (req, res, next) => {
         try {
-            const { car_id } = req.params;
-
-            const car = await carService.getSingleCar(car_id);
+           const { car } = req;
 
             res.json(car);
         } catch (e) {

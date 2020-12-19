@@ -16,17 +16,17 @@ studentRouter.post('/',
 // getStudents presents all students without their cars, its non-private endpoint.
 // getStudentById presents single student WITH his car, which is private info. So it`s private endpoint.
 
-studentRouter.use('/:id',
+studentRouter.use('/:student_id',
     authMiddleware.isAccessTokenAndIdTrue,
     studentValidationMiddleware.isIdCorrect,
     studentMiddleware.isIdPresent);
 
-studentRouter.get('/:id',
+studentRouter.get('/:student_id',
     studentController.getStudentById);
-studentRouter.put('/:id',
+studentRouter.put('/:student_id',
     studentValidationMiddleware.isBodyForUpdateCorrect,
     studentController.updateStudent);
-studentRouter.delete('/:id',
+studentRouter.delete('/:student_id',
     studentController.deleteStudent);
 
 module.exports = studentRouter;

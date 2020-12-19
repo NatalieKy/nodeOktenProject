@@ -34,7 +34,7 @@ module.exports = {
     isAccessTokenAndIdTrue: async (req, res, next) => {
         try {
             const accessToken = req.get('Authorization');
-            const parametrID = req.params.id;
+            const parameterID = req.params.student_id;
 
             if (!accessToken) {
                 throw new ErrorHandler(INVALID_TOKEN.message, INVALID_TOKEN.code);
@@ -53,7 +53,7 @@ module.exports = {
                 throw new ErrorHandler(INVALID_TOKEN.message, INVALID_TOKEN.code);
             }
 
-            if (id !== +parametrID) {
+            if (id !== +parameterID) {
                 throw new ErrorHandler(FORBIDDEN.message, FORBIDDEN.code);
             }
 

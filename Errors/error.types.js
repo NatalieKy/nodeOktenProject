@@ -7,8 +7,12 @@ module.exports = {
         message: 'Such email is already used!',
         code: FORBIDDEN
     },
+    NO_CAR_FOUND: {
+        message: 'No records of this ID in car database',
+        code: NOT_FOUND
+    },
     NO_USER_FOUND: {
-        message: 'No records of this ID database',
+        message: 'No records of this ID in user database',
         code: NOT_FOUND
     },
     NOT_VALID_ID: {

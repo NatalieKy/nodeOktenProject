@@ -47,9 +47,9 @@ module.exports = {
 
     getStudentById: async (req, res, next) => {
         try {
-            const { id } = req.params;
+            const { student_id } = req.params;
 
-            const student = await studentService.getSingleStudent(id);
+            const student = await studentService.getSingleStudent(student_id);
 
             res.status(OK).json(student);
         } catch (e) {
@@ -59,7 +59,7 @@ module.exports = {
 
     deleteStudent: async (req, res, next) => {
         try {
-            const userId = req.params.id;
+            const userId = req.params.student_id;
 
             await studentService.deleteStudent(userId);
 
