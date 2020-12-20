@@ -7,9 +7,10 @@ module.exports = {
         try {
             const studentPassword = await passwordHasher(req.body.password);
 
-            await studentService.createSingleStudent({ ...req.body }, studentPassword);
+            const newStudent = await studentService.createSingleStudent({ ...req.body }, studentPassword);
 
-            res.sendStatus(CREATED);
+            delete newStudent.dataValues.password;
+            res.status(CREATED).json(newStudent);
         } catch (e) {
             next(e);
         }

@@ -30,7 +30,7 @@ module.exports = {
         try {
             const { car } = req;
 
-            res.json(car);
+            res.sendStatus(OK).json(car);
         } catch (e) {
             next(e);
         }
@@ -43,7 +43,7 @@ module.exports = {
 
             await carService.updateSingleCar(dataToUpdate, car_id);
 
-            res.json(OK);
+            res.sendStatus(OK);
         } catch (e) {
             next(e);
         }
@@ -55,7 +55,7 @@ module.exports = {
 
             await carService.deleteCar(car_id);
 
-            res.json(NO_CONTENT);
+            res.sendStatus(NO_CONTENT);
         } catch (e) {
             next(e);
         }
