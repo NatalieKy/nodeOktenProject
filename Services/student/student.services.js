@@ -6,7 +6,7 @@ module.exports = {
         return Student.scope('noPassword').findAll();
     },
 
-    getSingleStudent: (studentId) => {
+    getSingleStudentWithCar: (studentId) => {
         const Student = database.getModel('Student');
         const Car = database.getModel('Car');
 

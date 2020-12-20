@@ -1,13 +1,10 @@
 const jwt = require('jsonwebtoken');
 
-const {
-    ErrorHandler, errorTypes: {
-        UNAUTHORIZED, INVALID_TOKEN, FORBIDDEN, METHOD_NOT_ALLOWED
-    }
-} = require('../../Errors');
-const { passwordEqualityChecker } = require('../../utilities/password.hasher');
+const { ACCESS_TOKEN_WORD, REFRESH_TOKEN_WORD } = require('../../configs/config');
 const { checkStudentByEmail } = require('../../Services/student/student.services');
+const { passwordEqualityChecker } = require('../../utilities/password.hasher');
 const { tokenService } = require('../../Services/tokens');
+const { ErrorHandler, errorTypes: { UNAUTHORIZED, INVALID_TOKEN, FORBIDDEN, METHOD_NOT_ALLOWED } } = require('../../Errors');
 
 module.exports = {
     areCredentialsTrue: async (req, res, next) => {
@@ -59,7 +56,7 @@ module.exports = {
                 throw new ErrorHandler(INVALID_TOKEN.message, INVALID_TOKEN.code);
             }
 
-            jwt.verify(accessToken, 'firstKey', (err) => {
+            jwt.verify(accessToken, ACCESS_TOKEN_WORD, (err) => {
                 if (err) {
                     console.log(accessToken);
                     throw new ErrorHandler(INVALID_TOKEN.message, INVALID_TOKEN.code);
@@ -95,7 +92,7 @@ module.exports = {
                 throw new ErrorHandler(INVALID_TOKEN.message, INVALID_TOKEN.code);
             }
 
-            jwt.verify(refreshToken, 'secondKey', (err) => {
+            jwt.verify(refreshToken, REFRESH_TOKEN_WORD, (err) => {
                 if (err) {
                     throw new ErrorHandler(INVALID_TOKEN.message, INVALID_TOKEN.code);
                 }

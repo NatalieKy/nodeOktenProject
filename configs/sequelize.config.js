@@ -1,9 +1,12 @@
+const { DATABASE_USERNAME, DATABASE_PASSWORD, HOST_NAME } = require('./config');
+const { DATABASE_NAME } = require('./constants/Constants');
+
 module.exports = {
     development: {
-        username: 'root',
-        password: 'telefon1',
-        database: 'june-2020',
-        host: '127.0.0.1',
+        username: DATABASE_USERNAME,
+        password: DATABASE_PASSWORD,
+        database: DATABASE_NAME,
+        host: HOST_NAME,
         dialect: 'mysql'
     },
 };

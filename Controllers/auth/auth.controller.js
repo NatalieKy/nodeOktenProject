@@ -1,5 +1,6 @@
 const tokensCreator = require('../../utilities/tokensCreator');
 const { tokenService } = require('../../Services/tokens');
+const { NO_CONTENT } = require('../../configs/httpStatusCodes');
 
 module.exports = {
     logination: async (req, res, next) => {
@@ -11,6 +12,18 @@ module.exports = {
 
             await tokenService.createTokens(tokens);
             res.json(tokens);
+        } catch (e) {
+            next(e);
+        }
+    },
+
+    logout: async (req, res, next) => {
+        try {
+            const { student_id } = req.params;
+
+            await tokenService.deleteTokens(student_id);
+
+            res.json(NO_CONTENT);
         } catch (e) {
             next(e);
         }

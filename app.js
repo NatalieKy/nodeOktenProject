@@ -1,9 +1,10 @@
 const express = require('express');
+require('dotenv').config();
 
-const app = express();
 const database = require('./dataBase');
 const { authRouter, carRouter, studentRouter } = require('./Routes');
 
+const app = express();
 database.getInstance().setModels();
 
 app.use(express.urlencoded({ extended: true }));

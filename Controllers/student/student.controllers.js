@@ -49,7 +49,7 @@ module.exports = {
         try {
             const { student_id } = req.params;
 
-            const student = await studentService.getSingleStudent(student_id);
+            const student = await studentService.getSingleStudentWithCar(student_id);
 
             res.status(OK).json(student);
         } catch (e) {

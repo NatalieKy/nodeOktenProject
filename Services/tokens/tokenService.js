@@ -1,11 +1,6 @@
 const dataBase = require('../../dataBase').getInstance();
 
 module.exports = {
-    // createTokens: (tokens) => {
-    //     const OAuth = dataBase.getModel('OAuth');
-    //
-    //     return OAuth.create(tokens);
-    // },
     createTokens: (tokens) => {
         const OAuth = dataBase.getModel('OAuth');
 
