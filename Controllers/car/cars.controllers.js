@@ -8,6 +8,7 @@ module.exports = {
             const { student_id } = req.params;
 
             Object.assign(car, { student_id });
+
             const newCar = await carService.createCar(car);
 
             res.status(CREATED).json(newCar);
