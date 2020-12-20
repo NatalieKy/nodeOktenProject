@@ -1,5 +1,8 @@
+const { STUDENTS_PRIMARY_KEY } = require('../../configs/constants/Constants');
+const { CAR, CARS, STUDENTS } = require('../../configs/constants/names.enums');
+
 module.exports = (client, DataTypes) => {
-    const Car = client.define('Car', {
+    const Car = client.define(CAR, {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -17,12 +20,12 @@ module.exports = (client, DataTypes) => {
             type: DataTypes.INTEGER,
             foreignKey: true,
             references: {
-                model: 'students',
-                key: 'id'
+                model: STUDENTS,
+                key: STUDENTS_PRIMARY_KEY
             }
         }
     }, {
-        tableName: 'cars',
+        tableName: CARS,
         timestamps: false
     });
 

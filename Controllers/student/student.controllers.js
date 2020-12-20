@@ -22,6 +22,7 @@ module.exports = {
 
             if (!password) {
                 await studentService.updateSingleStudent(user, studentId);
+
                 return res.sendStatus(OK);
             }
 

@@ -1,6 +1,9 @@
+const { STUDENTS_PRIMARY_KEY, MINIMUM_AGE } = require('../../configs/constants/Constants');
+const { STUDENTS, CARS, O_AUTH, MALE, FEMALE, CASCADE } = require('../../configs/constants/names.enums');
+
 module.exports = {
     up: async (queryInterface, Sequelize) => {
-        await queryInterface.createTable('students', {
+        await queryInterface.createTable(STUDENTS, {
             id: {
                 type: Sequelize.DataTypes.INTEGER,
                 primaryKey: true,
@@ -16,13 +19,13 @@ module.exports = {
                 type: Sequelize.DataTypes.INTEGER,
                 allowNull: false,
                 isNumeric: true,
-                min: 1,
+                min: MINIMUM_AGE,
             },
             gender: {
                 type: Sequelize.DataTypes.STRING,
                 isIn: [[
-                    'male',
-                    'female'
+                    MALE,
+                    FEMALE
                 ]],
                 allowNull: false
             },
@@ -37,7 +40,7 @@ module.exports = {
             }
         },);
 
-        await queryInterface.createTable('cars', {
+        await queryInterface.createTable(CARS, {
             id: {
                 type: Sequelize.DataTypes.INTEGER,
                 primaryKey: true,
@@ -55,16 +58,16 @@ module.exports = {
                 type: Sequelize.DataTypes.INTEGER,
                 allowNull: false,
                 foreignKey: true,
-                onDelete: 'CASCADE',
-                onUpdate: 'CASCADE',
+                onDelete: CASCADE,
+                onUpdate: CASCADE,
                 references: {
-                    model: 'students',
-                    key: 'id'
+                    model: STUDENTS,
+                    key: STUDENTS_PRIMARY_KEY
                 },
             }
         },);
 
-        await queryInterface.createTable('o_auth', {
+        await queryInterface.createTable(O_AUTH, {
             id: {
                 type: Sequelize.DataTypes.INTEGER,
                 primaryKey: true,
@@ -83,11 +86,11 @@ module.exports = {
                 type: Sequelize.DataTypes.INTEGER,
                 allowNull: false,
                 foreignKey: true,
-                onDelete: 'CASCADE',
-                onUpdate: 'CASCADE',
+                onDelete: CASCADE,
+                onUpdate: CASCADE,
                 references: {
-                    model: 'students',
-                    key: 'id'
+                    model: STUDENTS,
+                    key: STUDENTS_PRIMARY_KEY
                 },
             },
             created_at: {
@@ -98,8 +101,8 @@ module.exports = {
     },
 
     down: async (queryInterface) => {
-        await queryInterface.dropTable('students');
-        await queryInterface.dropTable('cars');
-        await queryInterface.dropTable('o_auth');
+        await queryInterface.dropTable(STUDENTS);
+        await queryInterface.dropTable(CARS);
+        await queryInterface.dropTable(O_AUTH);
     }
 };

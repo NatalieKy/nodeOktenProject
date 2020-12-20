@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 
 const { ACCESS_TOKEN_WORD, REFRESH_TOKEN_WORD } = require('../../configs/config');
+const { AUTHORIZATION } = require('../../configs/constants/names.enums');
 const { checkStudentByEmail } = require('../../Services/student/student.services');
 const { passwordEqualityChecker } = require('../../utilities/password.hasher');
 const { tokenService } = require('../../Services/tokens');
@@ -49,7 +50,7 @@ module.exports = {
 
     isAccessTokenAndIdTrue: async (req, res, next) => {
         try {
-            const accessToken = req.get('Authorization');
+            const accessToken = req.get(AUTHORIZATION);
             const parameterID = req.params.student_id;
 
             if (!accessToken) {
@@ -58,7 +59,6 @@ module.exports = {
 
             jwt.verify(accessToken, ACCESS_TOKEN_WORD, (err) => {
                 if (err) {
-                    console.log(accessToken);
                     throw new ErrorHandler(INVALID_TOKEN.message, INVALID_TOKEN.code);
                 }
             });
@@ -85,7 +85,7 @@ module.exports = {
 
     isRefreshTokenTrue: async (req, res, next) => {
         try {
-            const refreshToken = req.get('Authorization');
+            const refreshToken = req.get(AUTHORIZATION);
             const { student_id } = req.params;
 
             if (!refreshToken) {

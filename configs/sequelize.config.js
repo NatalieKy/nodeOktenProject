@@ -1,12 +1,12 @@
-const { DATABASE_USERNAME, DATABASE_PASSWORD, HOST_NAME } = require('./config');
-const { DATABASE_NAME } = require('./constants/Constants');
+require('dotenv').config();
+const { DB_USERNAME, DB_PASSWORD } = require('./config');
+const { DATABASE_NAME, DIALECT } = require('./constants/Constants');
 
 module.exports = {
     development: {
-        username: DATABASE_USERNAME,
-        password: DATABASE_PASSWORD,
+        username: DB_USERNAME,
+        password: DB_PASSWORD,
         database: DATABASE_NAME,
-        host: HOST_NAME,
-        dialect: 'mysql'
+        dialect: DIALECT
     },
 };

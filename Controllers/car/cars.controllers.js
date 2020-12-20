@@ -28,7 +28,7 @@ module.exports = {
 
     getSingleCar: (req, res, next) => {
         try {
-           const { car } = req;
+            const { car } = req;
 
             res.json(car);
         } catch (e) {

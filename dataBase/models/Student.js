@@ -1,5 +1,8 @@
+const { STUDENT_PASSWORD, O_AUTH_FOREIGN_KEY, CARS_FOREIGN_KEY, MINIMUM_AGE } = require('../../configs/constants/Constants');
+const { STUDENT, STUDENTS, FEMALE, MALE, CASCADE } = require('../../configs/constants/names.enums');
+
 module.exports = (client, DataTypes) => {
-    const Student = client.define('Student', {
+    const Student = client.define(STUDENT, {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -14,13 +17,13 @@ module.exports = (client, DataTypes) => {
             type: DataTypes.INTEGER,
             allowNull: false,
             isNumeric: true,
-            min: 1,
+            min: MINIMUM_AGE,
         },
         gender: {
             type: DataTypes.STRING,
             isIn: [[
-                'male',
-                'female'
+                MALE,
+                FEMALE
             ]],
             allowNull: false
         },
@@ -34,11 +37,11 @@ module.exports = (client, DataTypes) => {
             allowNull: false
         }
     }, {
-        tableName: 'students',
+        tableName: STUDENTS,
         timestamps: false,
         scopes: {
             noPassword: {
-                attributes: { exclude: ['password'] },
+                attributes: { exclude: [STUDENT_PASSWORD] },
             }
         }
     });
@@ -46,14 +49,14 @@ module.exports = (client, DataTypes) => {
     const Car = require('./Car')(client, DataTypes);
     const OAuth = require('./OAuth')(client, DataTypes);
     Student.hasMany(Car, {
-        foreignKey: 'student_id',
-        onDelete: 'cascade',
-        onUpdate: 'cascade'
+        foreignKey: CARS_FOREIGN_KEY,
+        onDelete: CASCADE,
+        onUpdate: CASCADE
     });
     Student.hasOne(OAuth, {
-        foreignKey: 'studentID',
-        onDelete: 'cascade',
-        onUpdate: 'cascade'
+        foreignKey: O_AUTH_FOREIGN_KEY,
+        onDelete: CASCADE,
+        onUpdate: CASCADE
     });
 
     return Student;
