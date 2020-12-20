@@ -1,5 +1,5 @@
-const { ErrorHandler } = require('../../Errors');
 const { BAD_REQUEST } = require('../../configs/httpStatusCodes');
+const { ErrorHandler } = require('../../Errors');
 const {
     studentBodyForCreateValidator, studentBodyForUpdateValidator, studentIdValidator
 } = require('../../joiValidators/student');

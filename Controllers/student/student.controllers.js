@@ -1,6 +1,6 @@
-const { studentService } = require('../../Services/student');
 const { CREATED, OK, NO_CONTENT } = require('../../configs/httpStatusCodes');
 const { passwordHasher } = require('../../utilities/password.hasher');
+const { studentService } = require('../../Services/student');
 
 module.exports = {
     createStudent: async (req, res, next) => {

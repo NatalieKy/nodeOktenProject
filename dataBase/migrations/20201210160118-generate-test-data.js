@@ -1,5 +1,5 @@
 const { passwordHasher } = require('../../utilities/password.hasher');
-const { STUDENTS, CARS } = require('../../configs/constants/names.enums');
+const { CARS, STUDENTS } = require('../../configs/constants/names.enums');
 
 module.exports = {
     async up(queryInterface) {

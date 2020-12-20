@@ -1,6 +1,6 @@
-const { ErrorHandler } = require('../../Errors');
 const { BAD_REQUEST } = require('../../configs/httpStatusCodes');
 const { carBodyForCreateValidator, carBodyForUpdateValidator, carIdValidator } = require('../../joiValidators/cars');
+const { ErrorHandler } = require('../../Errors');
 
 module.exports = {
 

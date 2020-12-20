@@ -1,15 +1,16 @@
 const dataBase = require('../../dataBase').getInstance();
+const { OAUTH, STUDENT } = require('../../configs/constants/names.enums');
 
 module.exports = {
     createTokens: (tokens) => {
-        const OAuth = dataBase.getModel('OAuth');
+        const OAuth = dataBase.getModel(OAUTH);
 
         return OAuth.create(tokens);
     },
 
     getAccessTokenAndStudent: (accessToken) => {
-        const OAuth = dataBase.getModel('OAuth');
-        const Student = dataBase.getModel('Student');
+        const OAuth = dataBase.getModel(OAUTH);
+        const Student = dataBase.getModel(STUDENT);
 
         return Student.findOne({
             include: {
@@ -20,8 +21,8 @@ module.exports = {
     },
 
     getStudentWithTokens: (email) => {
-        const OAuth = dataBase.getModel('OAuth');
-        const Student = dataBase.getModel('Student');
+        const OAuth = dataBase.getModel(OAUTH);
+        const Student = dataBase.getModel(STUDENT);
 
         return Student.findOne({
             where: { email },
@@ -32,7 +33,7 @@ module.exports = {
     },
 
     getRefreshToken: (refreshToken) => {
-        const OAuth = dataBase.getModel('OAuth');
+        const OAuth = dataBase.getModel(OAUTH);
 
         return OAuth.findOne({
             where: { refreshToken }
@@ -40,8 +41,8 @@ module.exports = {
     },
 
     getRefreshTokenAndStudent: (refreshToken) => {
-        const OAuth = dataBase.getModel('OAuth');
-        const Student = dataBase.getModel('Student');
+        const OAuth = dataBase.getModel(OAUTH);
+        const Student = dataBase.getModel(STUDENT);
 
         return Student.findOne({
             include: {
@@ -52,7 +53,7 @@ module.exports = {
     },
 
     deleteTokens: (studentID) => {
-        const OAuth = dataBase.getModel('OAuth');
+        const OAuth = dataBase.getModel(OAUTH);
 
         return OAuth.destroy({
             where: { studentID }

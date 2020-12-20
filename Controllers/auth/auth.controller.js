@@ -1,6 +1,6 @@
+const { NO_CONTENT } = require('../../configs/httpStatusCodes');
 const tokensCreator = require('../../utilities/tokensCreator');
 const { tokenService } = require('../../Services/tokens');
-const { NO_CONTENT } = require('../../configs/httpStatusCodes');
 
 module.exports = {
     logination: async (req, res, next) => {

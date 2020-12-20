@@ -1,5 +1,5 @@
-const { STUDENT_PASSWORD, O_AUTH_FOREIGN_KEY, CARS_FOREIGN_KEY, MINIMUM_AGE } = require('../../configs/constants/Constants');
-const { STUDENT, STUDENTS, FEMALE, MALE, CASCADE } = require('../../configs/constants/names.enums');
+const { CARS_FOREIGN_KEY, MINIMUM_AGE, STUDENT_PASSWORD, O_AUTH_FOREIGN_KEY } = require('../../configs/constants/Constants');
+const { CASCADE, FEMALE, MALE, STUDENT, STUDENTS, } = require('../../configs/constants/names.enums');
 
 module.exports = (client, DataTypes) => {
     const Student = client.define(STUDENT, {

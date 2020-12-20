@@ -1,23 +1,25 @@
 const database = require('../../dataBase').getInstance();
+const { SCOPE_EXCLUDE_PASSWORD } = require('../../configs/constants/Constants');
+const { STUDENT, CAR } = require('../../configs/constants/names.enums');
 
 module.exports = {
     getStudents: () => {
-        const Student = database.getModel('Student');
-        return Student.scope('noPassword').findAll();
+        const Student = database.getModel(STUDENT);
+        return Student.scope(SCOPE_EXCLUDE_PASSWORD).findAll();
     },
 
     getSingleStudentWithCar: (studentId) => {
-        const Student = database.getModel('Student');
-        const Car = database.getModel('Car');
+        const Student = database.getModel(STUDENT);
+        const Car = database.getModel(CAR);
 
-        return Student.scope('noPassword').findOne({
+        return Student.scope(SCOPE_EXCLUDE_PASSWORD).findOne({
             where: { id: studentId },
             include: [{ model: Car }]
         });
     },
 
     createSingleStudent: (student, hashedPassword) => {
-        const Student = database.getModel('Student');
+        const Student = database.getModel(STUDENT);
         return Student.create({
             name: student.name,
             email: student.email,
@@ -28,7 +30,7 @@ module.exports = {
     },
 
     updateSingleStudent: (updatedStudent, studentId, newPassword) => {
-        const Student = database.getModel('Student');
+        const Student = database.getModel(STUDENT);
 
         return Student.update({
             name: updatedStudent.name,
@@ -40,7 +42,7 @@ module.exports = {
     },
 
     deleteStudent: (studentId) => {
-        const Student = database.getModel('Student');
+        const Student = database.getModel(STUDENT);
 
         return Student.destroy({
             where: {
@@ -50,7 +52,7 @@ module.exports = {
     },
 
     checkStudentByEmail: (userEmail) => {
-        const Student = database.getModel('Student');
+        const Student = database.getModel(STUDENT);
 
         return Student.findOne({
             where: {
@@ -60,7 +62,7 @@ module.exports = {
     },
 
     idChecker: (studentID) => {
-        const Student = database.getModel('Student');
+        const Student = database.getModel(STUDENT);
 
         return Student.findOne({
             where: {

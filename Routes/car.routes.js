@@ -8,6 +8,9 @@ const { authMiddleware } = require('../Middleware/auth');
 
 const carRouter = Router();
 
+// list of all cars is non-private endpoint.
+// single car or any operation with car is private information, so its private endpoint
+
 carRouter.get('/',
     carController.getCars);
 carRouter.post('/:student_id',

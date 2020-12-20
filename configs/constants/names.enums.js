@@ -1,12 +1,12 @@
 module.exports = {
     AUTHORIZATION: 'Authorization',
-    STUDENT: 'Student',
     CAR: 'Car',
-    OAUTH: 'OAuth',
-    STUDENTS: 'students',
     CARS: 'cars',
-    O_AUTH: 'o_auth',
     CASCADE: 'CASCADE',
-    MALE: 'male',
     FEMALE: 'female',
+    MALE: 'male',
+    OAUTH: 'OAuth',
+    O_AUTH: 'o_auth',
+    STUDENT: 'Student',
+    STUDENTS: 'students',
 };

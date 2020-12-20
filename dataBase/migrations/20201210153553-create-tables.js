@@ -1,5 +1,5 @@
-const { STUDENTS_PRIMARY_KEY, MINIMUM_AGE } = require('../../configs/constants/Constants');
-const { STUDENTS, CARS, O_AUTH, MALE, FEMALE, CASCADE } = require('../../configs/constants/names.enums');
+const { MINIMUM_AGE, STUDENTS_PRIMARY_KEY } = require('../../configs/constants/Constants');
+const { CARS, CASCADE, FEMALE, MALE, O_AUTH, STUDENTS, } = require('../../configs/constants/names.enums');
 
 module.exports = {
     up: async (queryInterface, Sequelize) => {
