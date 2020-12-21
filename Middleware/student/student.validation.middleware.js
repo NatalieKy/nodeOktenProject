@@ -31,7 +31,7 @@ module.exports = {
         }
     },
 
-    isIdCorrect: (req, res, next) => {
+    isStudentIdCorrect: (req, res, next) => {
         try {
             const { student_id } = req.params;
             const { error } = studentIdValidator.validate(req.params.student_id);

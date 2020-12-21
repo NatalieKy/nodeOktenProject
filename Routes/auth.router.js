@@ -13,13 +13,13 @@ authRouter.post('/',
     authMiddleware.isStudentAlreadyLogged,
     authController.logination);
 authRouter.post('/:student_id/refresh',
-    studentValidationMiddleware.isIdCorrect,
-    studentMiddleware.isIdPresent,
+    studentValidationMiddleware.isStudentIdCorrect,
+    studentMiddleware.isStudentIdPresent,
     authMiddleware.isRefreshTokenTrue,
     authController.useRefreshToken);
 authRouter.post('/:student_id/logout',
-    studentValidationMiddleware.isIdCorrect,
-    studentMiddleware.isIdPresent,
+    studentValidationMiddleware.isStudentIdCorrect,
+    studentMiddleware.isStudentIdPresent,
     authController.logout);
 
 module.exports = authRouter;

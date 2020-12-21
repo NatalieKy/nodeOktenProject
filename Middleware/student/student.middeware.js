@@ -17,7 +17,7 @@ module.exports = {
         }
     },
 
-    isIdPresent: async (req, res, next) => {
+    isStudentIdPresent: async (req, res, next) => {
         try {
             const { student_id } = req.params;
             const student = await studentService.idChecker(student_id);

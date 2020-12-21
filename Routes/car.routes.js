@@ -15,13 +15,15 @@ carRouter.get('/',
     carController.getCars);
 carRouter.post('/:student_id',
     authMiddleware.isAccessTokenAndIdTrue,
-    studentValidationMiddleware.isIdCorrect,
-    studentMiddleware.isIdPresent,
+    studentValidationMiddleware.isStudentIdCorrect,
+    studentMiddleware.isStudentIdPresent,
     carValidationMiddleware.isCarBodyForCreateCorrect,
     carController.createNewCar);
 
 carRouter.use('/:student_id/:car_id',
     authMiddleware.isAccessTokenAndIdTrue,
+    studentMiddleware.isStudentIdPresent,
+    studentValidationMiddleware.isStudentIdCorrect,
     carValidationMiddleware.carIdValidator,
     carMiddleware.isCarIdPresent);
 

@@ -18,8 +18,8 @@ studentRouter.post('/',
 
 studentRouter.use('/:student_id',
     authMiddleware.isAccessTokenAndIdTrue,
-    studentValidationMiddleware.isIdCorrect,
-    studentMiddleware.isIdPresent);
+    studentValidationMiddleware.isStudentIdCorrect,
+    studentMiddleware.isStudentIdPresent);
 
 studentRouter.get('/:student_id',
     studentController.getStudentById);
