@@ -20,6 +20,18 @@ module.exports = {
         });
     },
 
+    getRefreshTokenAndStudent: (refreshToken) => {
+        const OAuth = dataBase.getModel(OAUTH);
+        const Student = dataBase.getModel(STUDENT);
+
+        return Student.findOne({
+            include: {
+                model: OAuth,
+                where: { refreshToken }
+            }
+        });
+    },
+
     getStudentWithTokens: (email) => {
         const OAuth = dataBase.getModel(OAUTH);
         const Student = dataBase.getModel(STUDENT);
@@ -40,15 +52,19 @@ module.exports = {
         });
     },
 
-    getRefreshTokenAndStudent: (refreshToken) => {
+    deleteTokensByTokenBody: (accessToken) => {
         const OAuth = dataBase.getModel(OAUTH);
-        const Student = dataBase.getModel(STUDENT);
 
-        return Student.findOne({
-            include: {
-                model: OAuth,
-                where: { refreshToken }
-            }
+        return OAuth.destroy({
+            where: { accessToken }
+        });
+    },
+
+    checkRefreshToken: (refreshToken) => {
+        const OAuth = dataBase.getModel(OAUTH);
+
+        return OAuth.findOne({
+            where: { refreshToken }
         });
     },
 

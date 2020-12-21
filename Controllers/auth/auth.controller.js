@@ -19,9 +19,8 @@ module.exports = {
 
     logout: async (req, res, next) => {
         try {
-            const { student_id } = req.params;
-
-            await tokenService.deleteTokens(student_id);
+            const { accessToken } = req;
+            await tokenService.deleteTokensByTokenBody(accessToken);
 
             res.json(NO_CONTENT);
         } catch (e) {
@@ -31,7 +30,7 @@ module.exports = {
 
     useRefreshToken: async (req, res, next) => {
         try {
-            const { student_id } = req.refreshInfo;
+            const { student_id } = req;
 
             await tokenService.deleteTokens(student_id);
 

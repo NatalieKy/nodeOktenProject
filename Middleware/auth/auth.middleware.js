@@ -48,6 +48,40 @@ module.exports = {
         }
     },
 
+    checkRefreshJWT: async (req, res, next) => {
+        try {
+            const refreshToken = req.get(AUTHORIZATION);
+            const student = await tokenService.getRefreshTokenAndStudent(refreshToken);
+
+            if (!student) {
+                throw new ErrorHandler(INVALID_TOKEN.message, INVALID_TOKEN.code);
+            }
+
+            const { id } = student.dataValues;
+            req.student_id = id;
+
+            next();
+        } catch (e) {
+            next(e);
+        }
+    },
+
+    checkAccessJWT: async (req, res, next) => {
+        try {
+            const accessToken = req.get(AUTHORIZATION);
+            const student = await tokenService.getAccessTokenAndStudent(accessToken);
+
+            if (!student) {
+                throw new ErrorHandler(INVALID_TOKEN.message, INVALID_TOKEN.code);
+            }
+
+            req.accessToken = accessToken;
+            next();
+        } catch (e) {
+            next(e);
+        }
+    },
+
     isAccessTokenAndIdTrue: async (req, res, next) => {
         try {
             const accessToken = req.get(AUTHORIZATION);
