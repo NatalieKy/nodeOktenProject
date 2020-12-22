@@ -1,4 +1,5 @@
 require('dotenv').config();
+const fileuploader = require('express-fileupload');
 const express = require('express');
 
 const database = require('./dataBase');
@@ -8,6 +9,7 @@ const app = express();
 
 database.getInstance().setModels();
 
+app.use(fileuploader());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 

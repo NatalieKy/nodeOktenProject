@@ -37,6 +37,9 @@ module.exports = {
             password: {
                 type: Sequelize.DataTypes.STRING,
                 allowNull: false
+            },
+            avatar: {
+                type: Sequelize.DataTypes.STRING,
             }
         },);
 
@@ -64,6 +67,12 @@ module.exports = {
                     model: STUDENTS,
                     key: STUDENTS_PRIMARY_KEY
                 },
+            },
+            car_photos: {
+                type: Sequelize.DataTypes.STRING,
+            },
+            documentation: {
+                type: Sequelize.DataTypes.STRING,
             }
         },);
 

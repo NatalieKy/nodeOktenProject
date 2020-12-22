@@ -1,10 +1,12 @@
 const { Router } = require('express');
-const { studentMiddleware } = require('../Middleware/student');
+
+const { authMiddleware } = require('../Middleware/auth');
 const { carMiddleware } = require('../Middleware/car');
 const { carController } = require('../Controllers/car');
-const { studentValidationMiddleware } = require('../Middleware/student');
 const { carValidationMiddleware } = require('../Middleware/car');
-const { authMiddleware } = require('../Middleware/auth');
+const { filesValidationMiddleware } = require('../Middleware/files');
+const { studentValidationMiddleware } = require('../Middleware/student');
+const { studentMiddleware } = require('../Middleware/student');
 
 const carRouter = Router();
 
@@ -18,6 +20,8 @@ carRouter.post('/:student_id',
     studentValidationMiddleware.isStudentIdCorrect,
     studentMiddleware.isStudentIdPresent,
     carValidationMiddleware.isCarBodyForCreateCorrect,
+    filesValidationMiddleware.filesTypesCheckAndDivision,
+    filesValidationMiddleware.checkMaximumQuantityCarPhotos,
     carController.createNewCar);
 
 carRouter.use('/:student_id/:car_id',

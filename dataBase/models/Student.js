@@ -35,6 +35,9 @@ module.exports = (client, DataTypes) => {
         password: {
             type: DataTypes.STRING,
             allowNull: false
+        },
+        avatar: {
+            type: DataTypes.STRING,
         }
     }, {
         tableName: STUDENTS,

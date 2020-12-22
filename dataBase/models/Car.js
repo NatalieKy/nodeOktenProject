@@ -23,6 +23,12 @@ module.exports = (client, DataTypes) => {
                 model: STUDENTS,
                 key: STUDENTS_PRIMARY_KEY
             }
+        },
+        car_photos: {
+            type: DataTypes.STRING,
+        },
+        documentation: {
+            type: DataTypes.STRING,
         }
     }, {
         tableName: CARS,

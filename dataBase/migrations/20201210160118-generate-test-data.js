@@ -5,20 +5,34 @@ module.exports = {
     async up(queryInterface) {
         await queryInterface.bulkInsert(STUDENTS, [
             {
-                name: 'Viktor', age: 26, gender: 'male', email: 'viktor@gmail.com', password: await passwordHasher('Qwerty123')
+                name: 'Viktor',
+                age: 26,
+                gender: 'male',
+                email: 'viktor@gmail.com',
+                password: await passwordHasher('Qwerty123'),
+                avatar: null
             },
             {
-                // eslint-disable-next-line max-len
-                name: 'IronBird', age: 24, gender: 'female', email: 'ironbird@gmail.com', password: await passwordHasher('Qwerty321')
+                name: 'IronBird',
+                age: 24,
+                gender: 'female',
+                email: 'ironbird@gmail.com',
+                password: await passwordHasher('Qwerty321'),
+                avatar: null
             },
             {
-                name: 'Olga', age: 25, gender: 'female', email: 'olya@gmail.com', password: await passwordHasher('Qwerty132')
+                name: 'Olga',
+                age: 25,
+                gender: 'female',
+                email: 'olya@gmail.com',
+                password: await passwordHasher('Qwerty132'),
+                avatar: null
             },
         ]);
         await queryInterface.bulkInsert(CARS, [
-            { name: 'Volvo', price: 25000, student_id: 1, },
-            { name: 'Tesla', price: 50000, student_id: 1 },
-            { name: 'Audi', price: 40000, student_id: 3 },
+            { name: 'Volvo', price: 25000, student_id: 1, car_photos: null, documentation: null },
+            { name: 'Tesla', price: 50000, student_id: 1, car_photos: null, documentation: null },
+            { name: 'Audi', price: 40000, student_id: 3, car_photos: null, documentation: null },
         ]);
     },
     async down(queryInterface) {
