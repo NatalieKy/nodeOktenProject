@@ -1,3 +1,6 @@
+const path = require('path');
+const uuid = require('uuid');
+
 const { carService } = require('../../Services/car');
 const { CREATED, OK, NO_CONTENT } = require('../../configs/httpStatusCodes');
 
@@ -6,12 +9,24 @@ module.exports = {
         try {
             const car = req.body;
             const { student_id } = req.params;
+            const { photos } = req;
 
             Object.assign(car, { student_id });
 
             const newCar = await carService.createCar(car);
 
+            if (photos) {
+                photos.forEach((photo) => {
+                    const photoExtension = photo.name.split('.').pop();
+                    const newPhotoName = `${uuid}.${photoExtension}`;
+                    const photosPathWithoutPublic = path.join('cars', `${student_id}`, 'car_photos');
+                    const photosFullPath = path.join(process.cwd(), 'public', photosPathWithoutPublic);
+                    photo.mv(path.join(photosFullPath, newPhotoName));
+                });
+            }
+
             res.status(CREATED).json(newCar);
+            res.status(CREATED).end();
         } catch (e) {
             next(e);
         }

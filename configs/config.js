@@ -5,4 +5,8 @@ module.exports = {
     DB_NAME: process.env.DATABASE_NAME,
     HOST_NAME: process.env.HOST_NAME,
     REFRESH_TOKEN_WORD: process.env.REFRESH_TOKEN_WORD,
+    MAIL: process.env.MAIL,
+    PASSWORD_TO_MAIL: process.env.PASSWORD_TO_MAIL,
+    TYPE_OF_MAIL: process.env.MAIL_TYPE,
+
 };

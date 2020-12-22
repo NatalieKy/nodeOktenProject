@@ -1,6 +1,7 @@
 require('dotenv').config();
 const fileuploader = require('express-fileupload');
 const express = require('express');
+const path = require('path');
 
 const database = require('./dataBase');
 const { authRouter, carRouter, studentRouter } = require('./Routes');
@@ -10,6 +11,7 @@ const app = express();
 database.getInstance().setModels();
 
 app.use(fileuploader());
+app.use(express.static(path.join(process.cwd(), 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 

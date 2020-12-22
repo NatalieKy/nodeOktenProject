@@ -41,6 +41,16 @@ module.exports = {
         }, { where: { id: studentId } });
     },
 
+    updateSingleStudentAvatar: (avatar, id) => {
+        const Student = database.getModel(STUDENT);
+
+        return Student.update({
+            avatar
+        }, { where: { id },
+            returning: true,
+        });
+    },
+
     deleteStudent: (studentId) => {
         const Student = database.getModel(STUDENT);
 

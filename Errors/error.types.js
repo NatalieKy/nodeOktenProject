@@ -25,6 +25,10 @@ module.exports = {
         message: 'Incorrect file`s type',
         code: BAD_REQUEST
     },
+    WRONG_TEMPLATE: {
+        message: 'Incorrect template',
+        code: BAD_REQUEST
+    },
     FORBIDDEN: {
         message: 'Access denied',
         code: FORBIDDEN

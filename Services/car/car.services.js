@@ -38,6 +38,15 @@ module.exports = {
         );
     },
 
+    updateSingleCarPhotos: (data, carId) => {
+        const Car = database.getModel(CAR);
+
+        return Car.update(
+            data,
+            { where: { id: carId } }
+        );
+    },
+
     getStudentsCar: (stID) => {
         const Car = database.getModel(CAR);
 
