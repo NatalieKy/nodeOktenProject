@@ -4,6 +4,7 @@ const uuid = require('uuid');
 
 const { carService } = require('../../Services/car');
 const { CREATED, OK, NO_CONTENT } = require('../../configs/httpStatusCodes');
+const { PHOTO_TYPE, DOCUMENT_TYPE } = require('../../configs/constants/names.enums');
 
 module.exports = {
     createNewCar: async (req, res, next) => {
@@ -26,7 +27,7 @@ module.exports = {
                     const photoExtension = photo.name.split('.').pop();
                     const newPhotoName = `${uuid.v1()}.${photoExtension}`;
                     await photo.mv(path.join(photosFullPath, newPhotoName));
-                    const file_type = 'dddd';
+                    const file_type = PHOTO_TYPE;
                     const file_path = await path.join(photosFullPath, newPhotoName);
                     await carService.updateSingleCarPhotos({ file_type, file_path }, newCar.dataValues.id);
                 });
@@ -43,7 +44,7 @@ module.exports = {
                     const photoExtension = document.name.split('.').pop();
                     const newDocumentName = `${uuid.v1()}.${photoExtension}`;
                     await document.mv(path.join(documentsFullPath, newDocumentName));
-                    const file_type = 'ggggg';
+                    const file_type = DOCUMENT_TYPE;
                     const file_path = await path.join(documentsFullPath, newDocumentName);
                     await carService.updateSingleCarDocuments({ file_type, file_path }, newCar.dataValues.id);
                 });
@@ -78,40 +79,39 @@ module.exports = {
     updateSingleCar: async (req, res, next) => {
         try {
             const { car_id } = req.params;
-            // const { student_id } = req.params;
+            const { student_id } = req.params;
             const dataToUpdate = req.body;
-            // const { photos, documents } = req;
+            const { photos, documents } = req;
 
             await carService.updateSingleCar(dataToUpdate, car_id);
 
-            // if (photos) {
-            //     const photosPathWithoutPublic = path.join('users', `${student_id}`, 'car photos');
-            //     const photosFullPath = path.join(process.cwd(), 'public', photosPathWithoutPublic);
-            //
-            //     for (const photo of photos) {
-            //         const photoExtension = photo.name.split('.').pop();
-            //         const newPhotoName = `${uuid.v1()}.${photoExtension}`;
-            //         try {
-            //             photo.mv(path.join(photosFullPath, newPhotoName));
-            //         } catch (e) {
-            //             console.log(e);
-            //         }
-            //     }
-            // }
-            //
-            // if (documents) {
-            //     const documentsFullPath = path.join(process.cwd(), 'public', 'users', `${student_id}`, 'car documents');
-            //
-            //     for (const document of documents) {
-            //         const documentExtension = document.name.split('.').pop();
-            //         const newDocumentName = `${uuid.v1()}.${documentExtension}`;
-            //         try {
-            //             document.mv(path.join(documentsFullPath, newDocumentName));
-            //         } catch (e) {
-            //             console.log(e);
-            //         }
-            //     }
-            // }
+            if (photos) {
+                const photosPathWithoutPublic = path.join('users', `${student_id}`, `car ${car_id}`, 'car photos');
+                const photosFullPath = path.join(process.cwd(), 'public', photosPathWithoutPublic);
+
+                photos.map(async (photo) => {
+                    const photoExtension = photo.name.split('.').pop();
+                    const newPhotoName = `${uuid.v1()}.${photoExtension}`;
+                    await photo.mv(path.join(photosFullPath, newPhotoName));
+                    const file_type = PHOTO_TYPE;
+                    const file_path = await path.join(photosFullPath, newPhotoName);
+                    await carService.updateSingleCarPhotos({ file_type, file_path }, car_id);
+                });
+            }
+
+            if (documents) {
+                const documentsPathWithoutPublic = path.join('users', `${student_id}`, `car ${car_id}`, 'car documents');
+                const documentsFullPath = path.join(process.cwd(), 'public', documentsPathWithoutPublic);
+
+                documents.map(async (photo) => {
+                    const documentExtension = photo.name.split('.').pop();
+                    const newDocumentName = `${uuid.v1()}.${documentExtension}`;
+                    await photo.mv(path.join(documentsFullPath, newDocumentName));
+                    const file_type = DOCUMENT_TYPE;
+                    const file_path = await path.join(documentsFullPath, newDocumentName);
+                    await carService.updateSingleCarDocuments({ file_type, file_path }, car_id);
+                });
+            }
 
             res.sendStatus(OK);
         } catch (e) {
