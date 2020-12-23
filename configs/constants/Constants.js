@@ -23,5 +23,8 @@ module.exports = {
     REFRESH_TOKEN_LIFE: '30d',
     SCOPE_EXCLUDE_PASSWORD: 'noPassword',
     STUDENTS_PRIMARY_KEY: 'id',
-    STUDENT_PASSWORD: 'password'
+    STUDENT_PASSWORD: 'password',
+    EMAIL_SUBJECT_WELCOME: 'Welcome letter',
+    EMAIL_TEMPLATE_WELCOME: 'welcome-information',
+
 };

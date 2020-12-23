@@ -3,6 +3,7 @@ const nodemailer = require('nodemailer');
 const path = require('path');
 
 const { MAIL, PASSWORD_TO_MAIL, TYPE_OF_MAIL } = require('../configs/config');
+const { LOCALHOST, NO_REPLY } = require('../configs/constants/names.enums');
 const { ErrorHandler, errorTypes: { WRONG_TEMPLATE } } = require('../Errors');
 const pugs = require('../email_templates');
 
@@ -12,10 +13,9 @@ const transporter = nodemailer.createTransport({
         pass: PASSWORD_TO_MAIL,
         user: MAIL,
     },
-    host: 'localhost',
+    host: LOCALHOST,
     secure: false,
     tls: {
-        // do not fail on invalid certs
         rejectUnauthorized: false
     },
 });
@@ -37,7 +37,7 @@ const EmailSender = async (userMail, typeOfAction, info) => {
         const html = await emailTemplates.render(typeOfTemplate.template, info);
 
         return transporter.sendMail({
-            from: 'NO REPLY',
+            from: NO_REPLY,
             to: userMail,
             subject: typeOfTemplate.subject,
             html
