@@ -26,9 +26,12 @@ module.exports = {
                 photos.map(async (photo) => {
                     const photoExtension = photo.name.split('.').pop();
                     const newPhotoName = `${uuid.v1()}.${photoExtension}`;
+
                     await photo.mv(path.join(photosFullPath, newPhotoName));
+
                     const file_type = PHOTO_TYPE;
                     const file_path = await path.join(photosFullPath, newPhotoName);
+
                     await carService.updateSingleCarPhotos({ file_type, file_path }, newCar.dataValues.id);
                 });
             }
@@ -43,9 +46,12 @@ module.exports = {
                 documents.map(async (document) => {
                     const photoExtension = document.name.split('.').pop();
                     const newDocumentName = `${uuid.v1()}.${photoExtension}`;
+
                     await document.mv(path.join(documentsFullPath, newDocumentName));
+
                     const file_type = DOCUMENT_TYPE;
                     const file_path = await path.join(documentsFullPath, newDocumentName);
+
                     await carService.updateSingleCarDocuments({ file_type, file_path }, newCar.dataValues.id);
                 });
             }
@@ -94,9 +100,12 @@ module.exports = {
                 photos.map(async (photo) => {
                     const photoExtension = photo.name.split('.').pop();
                     const newPhotoName = `${uuid.v1()}.${photoExtension}`;
+
                     await photo.mv(path.join(photosFullPath, newPhotoName));
+
                     const file_type = PHOTO_TYPE;
                     const file_path = await path.join(photosFullPath, newPhotoName);
+
                     await carService.updateSingleCarPhotos({ file_type, file_path }, car_id);
                 });
             }
@@ -110,9 +119,12 @@ module.exports = {
                 documents.map(async (photo) => {
                     const documentExtension = photo.name.split('.').pop();
                     const newDocumentName = `${uuid.v1()}.${documentExtension}`;
+
                     await photo.mv(path.join(documentsFullPath, newDocumentName));
+
                     const file_type = DOCUMENT_TYPE;
                     const file_path = await path.join(documentsFullPath, newDocumentName);
+
                     await carService.updateSingleCarDocuments({ file_type, file_path }, car_id);
                 });
             }
