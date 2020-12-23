@@ -3,7 +3,7 @@ const path = require('path');
 const uuid = require('uuid').v1();
 
 const { CREATED, OK, NO_CONTENT } = require('../../configs/httpStatusCodes');
-const { NEW_USER } = require('../../configs/constants/email-events');
+const { NEW_USER, DELETED_USER } = require('../../configs/constants/email-events');
 const { passwordHasher } = require('../../utilities/password.hasher');
 const { studentService } = require('../../Services/student');
 const { emailService } = require('../../Services');
@@ -104,6 +104,8 @@ module.exports = {
 
             await studentService.deleteStudent(userId);
             await fs.rmdir(pathToCarData, { recursive: true });
+
+            await emailService.EmailSender(req.body.email, DELETED_USER, { userName: req.body.name });
 
             res.status(NO_CONTENT).end();
         } catch (e) {

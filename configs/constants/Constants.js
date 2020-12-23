@@ -28,5 +28,7 @@ module.exports = {
     STUDENT_PASSWORD: 'password',
     EMAIL_SUBJECT_WELCOME: 'Welcome letter',
     EMAIL_TEMPLATE_WELCOME: 'welcome-information',
+    EMAIL_SUBJECT_BYE: 'Goodbye letter',
+    EMAIL_TEMPLATE_BYE: 'byebye-information'
 
 };
