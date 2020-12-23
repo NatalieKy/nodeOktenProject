@@ -11,43 +11,39 @@ const { ErrorHandler,
         TOO_BIG_PHOTO,
         TOO_MANY_STUDENT_PHOTOS,
         TOO_MANY_CARS_PHOTOS,
+        TOO_MANY_CARS_DOCUMENTS,
     } } = require('../../Errors');
 
 module.exports = {
     filesTypesCheckAndDivision: (req, res, next) => {
         try {
             const { files } = req;
-            if (files) {
-                const photos = [];
-                const documents = [];
-                const filesPackage = Object.values(files);
+            const photos = [];
+            const documents = [];
+            const filesPackage = Object.values(files);
 
-                if (filesPackage) {
-                    for (let file = 0; file < filesPackage.length; file++) {
-                        const { mimetype, size } = filesPackage[file];
+            for (let file = 0; file < filesPackage.length; file++) {
+                const { mimetype, size } = filesPackage[file];
 
-                        if (PHOTOS_MIMETYPES.includes(mimetype)) {
-                            if (size > PHOTOS_MAX_SIZE) {
-                                throw new ErrorHandler(TOO_BIG_PHOTO.message, TOO_BIG_PHOTO.code);
-                            }
-
-                            photos.push(filesPackage[file]);
-                        } else if (DOCUMENTS_MIMETYPES.includes(mimetype)) {
-                            if (size > DOCUMENTS_MAX_SIZE) {
-                                throw new ErrorHandler(TOO_BIG_FILE.message, TOO_BIG_FILE.code);
-                            }
-
-                            documents.push(filesPackage[file]);
-                        } else {
-                            throw new ErrorHandler(WRONG_FILE_FORMAT.message, WRONG_FILE_FORMAT.code);
-                        }
+                if (PHOTOS_MIMETYPES.includes(mimetype)) {
+                    if (size > PHOTOS_MAX_SIZE) {
+                        throw new ErrorHandler(TOO_BIG_PHOTO.message, TOO_BIG_PHOTO.code);
                     }
 
-                    req.documents = documents;
-                    req.photos = photos;
+                    photos.push(filesPackage[file]);
+                } else if (DOCUMENTS_MIMETYPES.includes(mimetype)) {
+                    if (size > DOCUMENTS_MAX_SIZE) {
+                        throw new ErrorHandler(TOO_BIG_FILE.message, TOO_BIG_FILE.code);
+                    }
+
+                    documents.push(filesPackage[file]);
+                } else {
+                    throw new ErrorHandler(WRONG_FILE_FORMAT.message, WRONG_FILE_FORMAT.code);
                 }
             }
 
+            req.documents = documents;
+            req.photos = photos;
             next();
         } catch (e) {
             next(e);
@@ -56,13 +52,11 @@ module.exports = {
 
     isStudentPhotoSingle: (req, res, next) => {
         try {
-            if (req.photos) {
-                if (req.photos.length > 1) {
-                    throw new ErrorHandler(TOO_MANY_STUDENT_PHOTOS.message, TOO_MANY_STUDENT_PHOTOS.code);
-                }
-
-                [req.studentsPhoto] = req.photos;
+            if (req.photos.length > 1) {
+                throw new ErrorHandler(TOO_MANY_STUDENT_PHOTOS.message, TOO_MANY_STUDENT_PHOTOS.code);
             }
+
+            [req.studentsPhoto] = req.photos;
             next();
         } catch (e) {
             next(e);
@@ -75,7 +69,19 @@ module.exports = {
                 throw new ErrorHandler(TOO_MANY_CARS_PHOTOS.message, TOO_MANY_CARS_PHOTOS.code);
             }
 
-            [req.carsPhotos] = req.photos;
+            [req.studentsPhoto] = req.photos;
+            next();
+        } catch (e) {
+            next(e);
+        }
+    },
+    checkMaximumQuantityCarFiles: (req, res, next) => {
+        try {
+            if (req.documents.length > 5) {
+                throw new ErrorHandler(TOO_MANY_CARS_DOCUMENTS.message, TOO_MANY_CARS_DOCUMENTS.code);
+            }
+
+            [req.studentsDocuments] = req.photos;
             next();
         } catch (e) {
             next(e);

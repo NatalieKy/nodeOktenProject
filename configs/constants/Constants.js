@@ -1,6 +1,8 @@
 module.exports = {
     ACCESS_TOKEN_LIFE: '1d',
     CARS_FOREIGN_KEY: 'student_id',
+    CARS_PRIMARY_KEY: 'id',
+    FILES_FOREIGN_KEY: 'carID',
     DIALECT: 'mysql',
     DOCUMENTS_MIMETYPES: [
         'application/pdf',

@@ -22,6 +22,7 @@ carRouter.post('/:student_id',
     carValidationMiddleware.isCarBodyForCreateCorrect,
     filesValidationMiddleware.filesTypesCheckAndDivision,
     filesValidationMiddleware.checkMaximumQuantityCarPhotos,
+    filesValidationMiddleware.checkMaximumQuantityCarFiles,
     carController.createNewCar);
 
 carRouter.use('/:student_id/:car_id',
@@ -34,6 +35,9 @@ carRouter.use('/:student_id/:car_id',
 carRouter.get('/:student_id/:car_id',
     carController.getSingleCar);
 carRouter.put('/:student_id/:car_id',
+    filesValidationMiddleware.filesTypesCheckAndDivision,
+    filesValidationMiddleware.checkMaximumQuantityCarPhotos,
+    filesValidationMiddleware.checkMaximumQuantityCarFiles,
     carValidationMiddleware.isCarBodyForUpdateCorrect,
     carController.updateSingleCar);
 carRouter.delete('/:student_id/:car_id',

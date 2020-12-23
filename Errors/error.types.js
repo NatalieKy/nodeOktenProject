@@ -21,6 +21,10 @@ module.exports = {
         message: 'Uploaded car`s photos must be not more than 10',
         code: BAD_REQUEST
     },
+    TOO_MANY_CARS_DOCUMENTS: {
+        message: 'Uploaded car`s documents must be not more than 5',
+        code: BAD_REQUEST
+    },
     WRONG_FILE_FORMAT: {
         message: 'Incorrect file`s type',
         code: BAD_REQUEST

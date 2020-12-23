@@ -1,5 +1,5 @@
-const { MINIMUM_AGE, STUDENTS_PRIMARY_KEY } = require('../../configs/constants/Constants');
-const { CARS, CASCADE, FEMALE, MALE, O_AUTH, STUDENTS, } = require('../../configs/constants/names.enums');
+const { MINIMUM_AGE, STUDENTS_PRIMARY_KEY, CARS_PRIMARY_KEY } = require('../../configs/constants/Constants');
+const { CARS, CASCADE, FEMALE, MALE, O_AUTH, STUDENTS, FILES } = require('../../configs/constants/names.enums');
 
 module.exports = {
     up: async (queryInterface, Sequelize) => {
@@ -67,12 +67,6 @@ module.exports = {
                     model: STUDENTS,
                     key: STUDENTS_PRIMARY_KEY
                 },
-            },
-            car_photos: {
-                type: Sequelize.DataTypes.STRING,
-            },
-            documentation: {
-                type: Sequelize.DataTypes.STRING,
             }
         },);
 
@@ -106,12 +100,44 @@ module.exports = {
                 type: Sequelize.DataTypes.DATE,
                 defaultValue: Sequelize.fn('NOW')
             }
-        });
+        },);
+
+        await queryInterface.createTable(FILES, {
+            id: {
+                type: Sequelize.DataTypes.INTEGER,
+                primaryKey: true,
+                autoIncrement: true,
+                allowNull: false
+            },
+            carID: {
+                type: Sequelize.DataTypes.INTEGER,
+                allowNull: false,
+                foreignKey: true,
+                references: {
+                    model: CARS,
+                    key: CARS_PRIMARY_KEY
+                }
+            },
+            file_type: {
+                type: Sequelize.DataTypes.STRING,
+                allowNull: false
+            },
+            file_path: {
+                type: Sequelize.DataTypes.STRING,
+                allowNull: false
+            },
+            created_at: {
+                type: Sequelize.DataTypes.DATE,
+                defaultValue: Sequelize.fn('NOW'),
+                allowNull: false
+            }
+        },);
     },
 
     down: async (queryInterface) => {
         await queryInterface.dropTable(STUDENTS);
         await queryInterface.dropTable(CARS);
         await queryInterface.dropTable(O_AUTH);
+        await queryInterface.dropTable(FILES);
     }
 };

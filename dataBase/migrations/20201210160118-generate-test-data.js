@@ -30,9 +30,9 @@ module.exports = {
             },
         ]);
         await queryInterface.bulkInsert(CARS, [
-            { name: 'Volvo', price: 25000, student_id: 1, car_photos: null, documentation: null },
-            { name: 'Tesla', price: 50000, student_id: 1, car_photos: null, documentation: null },
-            { name: 'Audi', price: 40000, student_id: 3, car_photos: null, documentation: null },
+            { name: 'Volvo', price: 25000, student_id: 1, },
+            { name: 'Tesla', price: 50000, student_id: 1 },
+            { name: 'Audi', price: 40000, student_id: 3 },
         ]);
     },
     async down(queryInterface) {

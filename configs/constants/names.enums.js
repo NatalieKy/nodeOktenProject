@@ -4,6 +4,8 @@ module.exports = {
     CARS: 'cars',
     CASCADE: 'CASCADE',
     FEMALE: 'female',
+    FILE: 'File',
+    FILES: 'files',
     LOCALHOST: 'localhost',
     MALE: 'male',
     NO_REPLY: 'no reply',

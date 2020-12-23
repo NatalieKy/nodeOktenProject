@@ -1,5 +1,5 @@
-const { STUDENTS_PRIMARY_KEY } = require('../../configs/constants/Constants');
-const { CAR, CARS, STUDENTS } = require('../../configs/constants/names.enums');
+const { STUDENTS_PRIMARY_KEY, FILES_FOREIGN_KEY } = require('../../configs/constants/Constants');
+const { CAR, CARS, STUDENTS, CASCADE } = require('../../configs/constants/names.enums');
 
 module.exports = (client, DataTypes) => {
     const Car = client.define(CAR, {
@@ -18,21 +18,26 @@ module.exports = (client, DataTypes) => {
         },
         student_id: {
             type: DataTypes.INTEGER,
+            allowNull: false,
             foreignKey: true,
+            onDelete: CASCADE,
+            onUpdate: CASCADE,
             references: {
                 model: STUDENTS,
                 key: STUDENTS_PRIMARY_KEY
             }
-        },
-        car_photos: {
-            type: DataTypes.STRING,
-        },
-        documentation: {
-            type: DataTypes.STRING,
         }
     }, {
         tableName: CARS,
         timestamps: false
+    });
+
+    const File = require('./File')(client, DataTypes);
+
+    Car.hasMany(File, {
+        foreignKey: FILES_FOREIGN_KEY,
+        onDelete: CASCADE,
+        onUpdate: CASCADE
     });
 
     return Car;

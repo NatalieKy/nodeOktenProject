@@ -1,5 +1,5 @@
 const database = require('../../dataBase').getInstance();
-const { CAR } = require('../../configs/constants/names.enums');
+const { CAR, FILE } = require('../../configs/constants/names.enums');
 
 module.exports = {
     createCar: (car) => {
@@ -38,12 +38,21 @@ module.exports = {
         );
     },
 
-    updateSingleCarPhotos: (data, carId) => {
-        const Car = database.getModel(CAR);
+    updateSingleCarPhotos: (data, carID) => {
+        const File = database.getModel(FILE);
+        return File.create(
+            { file_path: data.file_path, file_type: data.file_type, carID },
+            { where: { carID },
+                returning: true },
+        );
+    },
 
-        return Car.update(
-            data,
-            { where: { id: carId } }
+    updateSingleCarDocuments: (data, carID) => {
+        const File = database.getModel(FILE);
+        return File.create(
+            { file_path: data.file_path, file_type: data.file_type, carID },
+            { where: { carID },
+                returning: true },
         );
     },
 

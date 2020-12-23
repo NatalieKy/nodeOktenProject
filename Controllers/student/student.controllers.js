@@ -52,6 +52,7 @@ module.exports = {
                 const avatarFullPath = path.join(process.cwd(), 'public', avatarPathWithoutPublic);
                 const photoPath = path.join(avatarPathWithoutPublic, newPhotoName);
 
+                await fs.rmdir(path.join(avatarPathWithoutPublic), { recursive: true });
                 await fs.mkdir(path.join(avatarFullPath), { recursive: true });
                 await avatar.mv(path.join(avatarFullPath, newPhotoName));
 
@@ -99,8 +100,10 @@ module.exports = {
     deleteStudent: async (req, res, next) => {
         try {
             const userId = req.params.student_id;
+            const pathToCarData = path.join(process.cwd(), 'public', 'users', `${userId}`);
 
             await studentService.deleteStudent(userId);
+            await fs.rmdir(pathToCarData, { recursive: true });
 
             res.status(NO_CONTENT).end();
         } catch (e) {
