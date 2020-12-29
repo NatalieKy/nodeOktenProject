@@ -1,5 +1,8 @@
+const { Op } = require('sequelize');
+
 const dataBase = require('../../dataBase').getInstance();
 const { OAUTH, STUDENT } = require('../../configs/constants/names.enums');
+const { THIRTY_DAYS } = require('../../configs/constants/Constants');
 
 module.exports = {
     createTokens: (tokens, transaction) => {
@@ -16,6 +19,17 @@ module.exports = {
             include: {
                 model: OAuth,
                 where: { accessToken }
+            }
+        });
+    },
+
+    JWTRefreshDelete: () => {
+        const OAuth = dataBase.getModel(OAUTH);
+        return OAuth.destroy({
+            where: {
+                created_at: {
+                    [Op.gt]: new Date(new Date() - THIRTY_DAYS)
+                }
             }
         });
     },

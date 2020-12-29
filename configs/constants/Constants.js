@@ -2,6 +2,7 @@ module.exports = {
     ACCESS_TOKEN_LIFE: '1d',
     CARS_FOREIGN_KEY: 'student_id',
     CARS_PRIMARY_KEY: 'id',
+    CRONE_00_00_EVERY_DAY: '0 0 * * *',
     FILES_FOREIGN_KEY: 'carID',
     DIALECT: 'mysql',
     DOCUMENTS_MIMETYPES: [
@@ -14,6 +15,10 @@ module.exports = {
         'application/vnd.oasis.opendocument.presentation'
     ],
     DOCUMENTS_MAX_SIZE: (10 * 1024 * 1024),
+    EMAIL_SUBJECT_WELCOME: 'Welcome letter',
+    EMAIL_TEMPLATE_WELCOME: 'welcome-information',
+    EMAIL_SUBJECT_BYE: 'Goodbye letter',
+    EMAIL_TEMPLATE_BYE: 'byebye-information',
     MINIMUM_AGE: 1,
     O_AUTH_FOREIGN_KEY: 'studentID',
     PHOTOS_MIMETYPES: [
@@ -26,9 +31,5 @@ module.exports = {
     SCOPE_EXCLUDE_PASSWORD: 'noPassword',
     STUDENTS_PRIMARY_KEY: 'id',
     STUDENT_PASSWORD: 'password',
-    EMAIL_SUBJECT_WELCOME: 'Welcome letter',
-    EMAIL_TEMPLATE_WELCOME: 'welcome-information',
-    EMAIL_SUBJECT_BYE: 'Goodbye letter',
-    EMAIL_TEMPLATE_BYE: 'byebye-information'
-
+    THIRTY_DAYS: 30 * 24 * 60 * 60 * 1000
 };

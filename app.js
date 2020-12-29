@@ -5,6 +5,7 @@ const path = require('path');
 
 const database = require('./dataBase');
 const { authRouter, carRouter, studentRouter } = require('./Routes');
+const { deleteRefreshTokenAfter30Days } = require('./cron_jobs');
 
 const app = express();
 
@@ -26,4 +27,7 @@ app.use('*', (err, req, res, next) => {
             message: err.message
         });
 });
-app.listen(5000, () => {});
+
+app.listen(5000, async () => {
+    await deleteRefreshTokenAfter30Days();
+});
