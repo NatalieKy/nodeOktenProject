@@ -5,9 +5,12 @@ const uuid = require('uuid');
 const { carService } = require('../../Services/car');
 const { CREATED, OK, NO_CONTENT } = require('../../configs/httpStatusCodes');
 const { PHOTO_TYPE, DOCUMENT_TYPE } = require('../../configs/constants/names.enums');
+const { transactionInstance } = require('../../dataBase').getInstance();
 
 module.exports = {
     createNewCar: async (req, res, next) => {
+        const transaction = await transactionInstance();
+
         try {
             const car = req.body;
             const { student_id } = req.params;
@@ -15,49 +18,61 @@ module.exports = {
 
             Object.assign(car, { student_id });
 
-            const newCar = await carService.createCar(car);
+            const newCar = await carService.createCar(car, transaction);
 
             if (photos) {
-                const photosPathWithoutPublic = path.join('users', `${student_id}`, `car ${newCar.dataValues.id}`, 'car photos');
-                const photosFullPath = path.join(process.cwd(), 'public', photosPathWithoutPublic);
+                try {
+                    // eslint-disable-next-line max-len
+                    const photosPathWithoutPublic = path.join('users', `${student_id}`, `car ${newCar.dataValues.id}`, 'car photos');
+                    const photosFullPath = path.join(process.cwd(), 'public', photosPathWithoutPublic);
 
-                await fs.mkdir(photosFullPath, { recursive: true });
+                    await fs.mkdir(photosFullPath, { recursive: true });
 
-                photos.map(async (photo) => {
-                    const photoExtension = photo.name.split('.').pop();
-                    const newPhotoName = `${uuid.v1()}.${photoExtension}`;
+                    photos.map(async (photo) => {
+                        const photoExtension = photo.name.split('.').pop();
+                        const newPhotoName = `${uuid.v1()}.${photoExtension}`;
 
-                    await photo.mv(path.join(photosFullPath, newPhotoName));
+                        await photo.mv(path.join(photosFullPath, newPhotoName));
 
-                    const file_type = PHOTO_TYPE;
-                    const file_path = await path.join(photosFullPath, newPhotoName);
+                        const file_type = PHOTO_TYPE;
+                        const file_path = await path.join(photosFullPath, newPhotoName);
 
-                    await carService.updateSingleCarPhotos({ file_type, file_path }, newCar.dataValues.id);
-                });
+                        await carService.updateSingleCarPhotos({ file_type, file_path }, newCar.dataValues.id, transaction);
+                        await transaction.commit();
+                    });
+                } catch (e) {
+                    await transaction.rollback();
+                }
             }
 
             if (documents) {
-                // eslint-disable-next-line max-len
-                const documentsPathWithoutPublic = path.join('users', `${student_id}`, `car ${newCar.dataValues.id}`, 'car documents');
-                const documentsFullPath = path.join(process.cwd(), 'public', documentsPathWithoutPublic);
+                try {
+                    // eslint-disable-next-line max-len
+                    const documentsPathWithoutPublic = path.join('users', `${student_id}`, `car ${newCar.dataValues.id}`, 'car documents');
+                    const documentsFullPath = path.join(process.cwd(), 'public', documentsPathWithoutPublic);
 
-                await fs.mkdir(documentsFullPath, { recursive: true });
+                    await fs.mkdir(documentsFullPath, { recursive: true });
 
-                documents.map(async (document) => {
-                    const photoExtension = document.name.split('.').pop();
-                    const newDocumentName = `${uuid.v1()}.${photoExtension}`;
+                    documents.map(async (document) => {
+                        const photoExtension = document.name.split('.').pop();
+                        const newDocumentName = `${uuid.v1()}.${photoExtension}`;
 
-                    await document.mv(path.join(documentsFullPath, newDocumentName));
+                        await document.mv(path.join(documentsFullPath, newDocumentName));
 
-                    const file_type = DOCUMENT_TYPE;
-                    const file_path = await path.join(documentsFullPath, newDocumentName);
+                        const file_type = DOCUMENT_TYPE;
+                        const file_path = await path.join(documentsFullPath, newDocumentName);
 
-                    await carService.updateSingleCarDocuments({ file_type, file_path }, newCar.dataValues.id);
-                });
+                        await carService.updateSingleCarDocuments({ file_type, file_path }, newCar.dataValues.id, transaction);
+                        await transaction.commit();
+                    });
+                } catch (e) {
+                    await transaction.rollback();
+                }
             }
 
             res.status(CREATED).json(newCar);
         } catch (e) {
+            await transaction.rollback();
             next(e);
         }
     },
@@ -83,50 +98,61 @@ module.exports = {
     },
 
     updateSingleCar: async (req, res, next) => {
+        const transaction = await transactionInstance();
         try {
             const { car_id } = req.params;
             const { student_id } = req.params;
             const dataToUpdate = req.body;
             const { photos, documents } = req;
 
-            await carService.updateSingleCar(dataToUpdate, car_id);
+            await carService.updateSingleCar(dataToUpdate, car_id, transaction);
 
             if (photos) {
-                const photosPathWithoutPublic = path.join('users', `${student_id}`, `car ${car_id}`, 'car photos');
-                const photosFullPath = path.join(process.cwd(), 'public', photosPathWithoutPublic);
+                try {
+                    const photosPathWithoutPublic = path.join('users', `${student_id}`, `car ${car_id}`, 'car photos');
+                    const photosFullPath = path.join(process.cwd(), 'public', photosPathWithoutPublic);
 
-                await fs.mkdir(photosFullPath, { recursive: true });
+                    await fs.mkdir(photosFullPath, { recursive: true });
 
-                photos.map(async (photo) => {
-                    const photoExtension = photo.name.split('.').pop();
-                    const newPhotoName = `${uuid.v1()}.${photoExtension}`;
+                    photos.map(async (photo) => {
+                        const photoExtension = photo.name.split('.').pop();
+                        const newPhotoName = `${uuid.v1()}.${photoExtension}`;
 
-                    await photo.mv(path.join(photosFullPath, newPhotoName));
+                        await photo.mv(path.join(photosFullPath, newPhotoName));
 
-                    const file_type = PHOTO_TYPE;
-                    const file_path = await path.join(photosFullPath, newPhotoName);
+                        const file_type = PHOTO_TYPE;
+                        const file_path = await path.join(photosFullPath, newPhotoName);
 
-                    await carService.updateSingleCarPhotos({ file_type, file_path }, car_id);
-                });
+                        await carService.updateSingleCarPhotos({ file_type, file_path }, car_id, transaction);
+                        await transaction.commit();
+                    });
+                } catch (e) {
+                    await transaction.rollback();
+                }
             }
 
             if (documents) {
-                const documentsPathWithoutPublic = path.join('users', `${student_id}`, `car ${car_id}`, 'car documents');
-                const documentsFullPath = path.join(process.cwd(), 'public', documentsPathWithoutPublic);
+                try {
+                    const documentsPathWithoutPublic = path.join('users', `${student_id}`, `car ${car_id}`, 'car documents');
+                    const documentsFullPath = path.join(process.cwd(), 'public', documentsPathWithoutPublic);
 
-                await fs.mkdir(documentsFullPath, { recursive: true });
+                    await fs.mkdir(documentsFullPath, { recursive: true });
 
-                documents.map(async (photo) => {
-                    const documentExtension = photo.name.split('.').pop();
-                    const newDocumentName = `${uuid.v1()}.${documentExtension}`;
+                    documents.map(async (photo) => {
+                        const documentExtension = photo.name.split('.').pop();
+                        const newDocumentName = `${uuid.v1()}.${documentExtension}`;
 
-                    await photo.mv(path.join(documentsFullPath, newDocumentName));
+                        await photo.mv(path.join(documentsFullPath, newDocumentName));
 
-                    const file_type = DOCUMENT_TYPE;
-                    const file_path = await path.join(documentsFullPath, newDocumentName);
+                        const file_type = DOCUMENT_TYPE;
+                        const file_path = await path.join(documentsFullPath, newDocumentName);
 
-                    await carService.updateSingleCarDocuments({ file_type, file_path }, car_id);
-                });
+                        await carService.updateSingleCarDocuments({ file_type, file_path }, car_id, transaction);
+                        await transaction.commit();
+                    });
+                } catch (e) {
+                    await transaction.rollback();
+                }
             }
 
             res.sendStatus(OK);
@@ -136,16 +162,19 @@ module.exports = {
     },
 
     deleteSingleCar: async (req, res, next) => {
+        const transaction = await transactionInstance();
         try {
             const { car_id } = req.params;
             const { student_id } = req.params;
             const pathToCarData = path.join(process.cwd(), 'public', 'cars', `user ${student_id}`);
 
-            await carService.deleteCar(car_id);
+            await carService.deleteCar(car_id, transaction);
             await fs.rmdir(pathToCarData, { recursive: true });
+            await transaction.commit();
 
             res.sendStatus(NO_CONTENT);
         } catch (e) {
+            await transaction.rollback();
             next(e);
         }
     }

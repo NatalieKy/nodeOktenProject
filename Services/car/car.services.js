@@ -2,10 +2,10 @@ const database = require('../../dataBase').getInstance();
 const { CAR, FILE } = require('../../configs/constants/names.enums');
 
 module.exports = {
-    createCar: (car) => {
+    createCar: (car, transaction) => {
         const Car = database.getModel(CAR);
 
-        return Car.create(car);
+        return Car.create(car, { transaction });
     },
 
     getAllCars: () => {
@@ -21,38 +21,45 @@ module.exports = {
         return Car.findByPk(id);
     },
 
-    deleteCar: (id) => {
+    deleteCar: (id, transaction) => {
         const Car = database.getModel(CAR);
 
         return Car.destroy({
-            where: { id }
+            where: { id },
+            transaction
         });
     },
 
-    updateSingleCar: (dataToUpdate, carId) => {
+    updateSingleCar: (dataToUpdate, carId, transaction) => {
         const Car = database.getModel(CAR);
 
         return Car.update(
             dataToUpdate,
-            { where: { id: carId } }
+            { where: { id: carId },
+                transaction
+            }
         );
     },
 
-    updateSingleCarPhotos: (data, carID) => {
+    updateSingleCarPhotos: (data, carID, transaction) => {
         const File = database.getModel(FILE);
         return File.create(
             { file_path: data.file_path, file_type: data.file_type, carID },
-            { where: { carID },
+            {
+                where: { carID },
+                transaction,
                 returning: true },
         );
     },
 
-    updateSingleCarDocuments: (data, carID) => {
+    updateSingleCarDocuments: (data, carID, transaction) => {
         const File = database.getModel(FILE);
         return File.create(
             { file_path: data.file_path, file_type: data.file_type, carID },
             { where: { carID },
-                returning: true },
+                returning: true,
+                transaction,
+            },
         );
     },
 

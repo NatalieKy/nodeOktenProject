@@ -2,10 +2,10 @@ const dataBase = require('../../dataBase').getInstance();
 const { OAUTH, STUDENT } = require('../../configs/constants/names.enums');
 
 module.exports = {
-    createTokens: (tokens) => {
+    createTokens: (tokens, transaction) => {
         const OAuth = dataBase.getModel(OAUTH);
 
-        return OAuth.create(tokens);
+        return OAuth.create(tokens, { transaction });
     },
 
     getAccessTokenAndStudent: (accessToken) => {
@@ -52,11 +52,12 @@ module.exports = {
         });
     },
 
-    deleteTokensByTokenBody: (accessToken) => {
+    deleteTokensByTokenBody: (accessToken, transaction) => {
         const OAuth = dataBase.getModel(OAUTH);
 
         return OAuth.destroy({
-            where: { accessToken }
+            where: { accessToken },
+            transaction
         });
     },
 
@@ -68,11 +69,12 @@ module.exports = {
         });
     },
 
-    deleteTokens: (studentID) => {
+    deleteTokens: (studentID, transaction) => {
         const OAuth = dataBase.getModel(OAUTH);
 
         return OAuth.destroy({
-            where: { studentID }
+            where: { studentID },
+            transaction
         });
     }
 

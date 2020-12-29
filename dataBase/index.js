@@ -29,7 +29,8 @@ module.exports = (() => {
 
         return {
             setModels: () => getModels(),
-            getModel: (modelName) => models[modelName]
+            getModel: (modelName) => models[modelName],
+            transactionInstance: () => client.transaction()
         };
     }
 

@@ -18,7 +18,7 @@ module.exports = {
         });
     },
 
-    createSingleStudent: (student, hashedPassword) => {
+    createSingleStudent: (student, hashedPassword, transaction) => {
         const Student = database.getModel(STUDENT);
         return Student.create({
             name: student.name,
@@ -26,10 +26,12 @@ module.exports = {
             age: student.age,
             gender: student.gender,
             password: hashedPassword,
+        }, {
+            transaction
         });
     },
 
-    updateSingleStudent: (updatedStudent, studentId, newPassword) => {
+    updateSingleStudent: (updatedStudent, studentId, newPassword, transaction) => {
         const Student = database.getModel(STUDENT);
 
         return Student.update({
@@ -38,26 +40,28 @@ module.exports = {
             age: updatedStudent.age,
             gender: updatedStudent.gender,
             password: newPassword
-        }, { where: { id: studentId } });
+        }, { where: { id: studentId }, transaction });
     },
 
-    updateSingleStudentAvatar: (avatar, id) => {
+    updateSingleStudentAvatar: (avatar, id, transaction) => {
         const Student = database.getModel(STUDENT);
 
         return Student.update({
             avatar
         }, { where: { id },
             returning: true,
+            transaction
         });
     },
 
-    deleteStudent: (studentId) => {
+    deleteStudent: (studentId, transaction) => {
         const Student = database.getModel(STUDENT);
 
         return Student.destroy({
             where: {
                 id: studentId
-            }
+            },
+            transaction
         });
     },
 
