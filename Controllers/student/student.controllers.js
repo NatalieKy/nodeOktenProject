@@ -3,7 +3,9 @@ const path = require('path');
 const uuid = require('uuid').v1();
 
 const { CREATED, OK, NO_CONTENT } = require('../../configs/httpStatusCodes');
+const { logService } = require('../../Services/log');
 const { NEW_USER, DELETED_USER } = require('../../configs/constants/email-events');
+const { ACTION_USER_CREATED, ACTION_USER_DELETED, ACTION_USER_UPDATED } = require('../../configs/constants/Constants');
 const { passwordHasher } = require('../../utilities/password.hasher');
 const { studentService } = require('../../Services/student');
 const { emailService } = require('../../Services');
@@ -17,6 +19,15 @@ module.exports = {
 
             const studentPassword = await passwordHasher(req.body.password);
             const newStudent = await studentService.createSingleStudent({ ...req.body }, studentPassword, transaction);
+
+            const logInfo = {};
+            Object.assign(logInfo, {
+                action: ACTION_USER_CREATED,
+                student_id: newStudent.dataValues.id,
+                action_time: new Date().getTime()
+            });
+
+            await logService.createLogs(logInfo);
 
             if (avatar) {
                 try {
@@ -33,6 +44,7 @@ module.exports = {
                     await transaction.commit();
                 } catch (e) {
                     await transaction.rollback();
+                    next(e);
                 }
             }
 
@@ -68,9 +80,11 @@ module.exports = {
                     await avatar.mv(path.join(avatarFullPath, newPhotoName));
 
                     await studentService.updateSingleStudentAvatar(photoPath, studentId, transaction);
+                    await transaction.commit();
                 }
             } catch (e) {
                 await transaction.rollback();
+                next(e);
             }
 
             if (!password) {
@@ -82,6 +96,15 @@ module.exports = {
             const newPassword = await passwordHasher(password);
 
             await studentService.updateSingleStudent(user, studentId, newPassword, transaction);
+
+            const logInfo = {};
+            Object.assign(logInfo, {
+                action: ACTION_USER_UPDATED,
+                student_id: studentId,
+                action_time: new Date().getTime()
+            });
+
+            await logService.createLogs(logInfo);
             await transaction.commit();
 
             res.sendStatus(OK);
@@ -124,12 +147,20 @@ module.exports = {
             await fs.rmdir(pathToCarData, { recursive: true });
 
             await emailService.EmailSender(req.body.email, DELETED_USER, { userName: req.body.name });
+
+            const logInfo = {};
+            Object.assign(logInfo, {
+                action: ACTION_USER_DELETED,
+                student_id: userId,
+                action_time: new Date().getTime()
+            });
+
+            await logService.createLogs(logInfo);
             await transaction.commit();
 
             res.status(NO_CONTENT).end();
         } catch (e) {
             await transaction.rollback();
-
             next(e);
         }
     },
