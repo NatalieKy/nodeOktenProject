@@ -100,23 +100,23 @@ module.exports = {
             await carService.updateSingleCar(dataToUpdate, car_id, transaction);
 
             if (photos) {
-                    const photosPathWithoutPublic = path.join('users', `${student_id}`, `car ${car_id}`, 'car photos');
-                    const photosFullPath = path.join(process.cwd(), 'public', photosPathWithoutPublic);
+                const photosPathWithoutPublic = path.join('users', `${student_id}`, `car ${car_id}`, 'car photos');
+                const photosFullPath = path.join(process.cwd(), 'public', photosPathWithoutPublic);
 
-                    await fs.mkdir(photosFullPath, { recursive: true });
+                await fs.mkdir(photosFullPath, { recursive: true });
 
-                    photos.map(async (photo) => {
-                        const photoExtension = photo.name.split('.').pop();
-                        const newPhotoName = `${uuid.v1()}.${photoExtension}`;
+                photos.map(async (photo) => {
+                    const photoExtension = photo.name.split('.').pop();
+                    const newPhotoName = `${uuid.v1()}.${photoExtension}`;
 
-                        await photo.mv(path.join(photosFullPath, newPhotoName));
+                    await photo.mv(path.join(photosFullPath, newPhotoName));
 
-                        const file_type = PHOTO_TYPE;
-                        const file_path = await path.join(photosFullPath, newPhotoName);
+                    const file_type = PHOTO_TYPE;
+                    const file_path = await path.join(photosFullPath, newPhotoName);
 
-                        await carService.updateSingleCarPhotos({ file_type, file_path }, car_id, transaction);
-                        await transaction.commit();
-                    });
+                    await carService.updateSingleCarPhotos({ file_type, file_path }, car_id, transaction);
+                    await transaction.commit();
+                });
             }
 
             if (documents) {

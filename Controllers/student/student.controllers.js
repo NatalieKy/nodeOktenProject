@@ -3,12 +3,10 @@ const path = require('path');
 const uuid = require('uuid').v1();
 
 const { CREATED, OK, NO_CONTENT } = require('../../configs/httpStatusCodes');
-const { logService } = require('../../Services/log');
 const { NEW_USER, DELETED_USER } = require('../../configs/constants/email-events');
 const { ACTION_USER_CREATED, ACTION_USER_DELETED, ACTION_USER_UPDATED } = require('../../configs/constants/Constants');
 const { passwordHasher } = require('../../utilities/password.hasher');
-const { studentService } = require('../../Services/student');
-const { emailService } = require('../../Services');
+const { studentService, emailService, logService } = require('../../Services');
 const { transactionInstance } = require('../../dataBase').getInstance();
 
 module.exports = {
