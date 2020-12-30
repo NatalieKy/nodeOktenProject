@@ -30,22 +30,16 @@ module.exports = {
             await logService.createLogs(logInfo);
 
             if (avatar) {
-                try {
-                    const photoExtension = avatar.name.split('.').pop();
-                    const newPhotoName = `${uuid}.${photoExtension}`;
-                    const avatarPathWithoutPublic = path.join('users', `${newStudent.dataValues.id}`, 'avatar');
-                    const avatarFullPath = path.join(process.cwd(), 'public', avatarPathWithoutPublic);
-                    const photoPath = path.join(avatarPathWithoutPublic, newPhotoName);
+                const photoExtension = avatar.name.split('.').pop();
+                const newPhotoName = `${uuid}.${photoExtension}`;
+                const avatarPathWithoutPublic = path.join('users', `${newStudent.dataValues.id}`, 'avatar');
+                const avatarFullPath = path.join(process.cwd(), 'public', avatarPathWithoutPublic);
+                const photoPath = path.join(avatarPathWithoutPublic, newPhotoName);
 
-                    await fs.mkdir(path.join(avatarFullPath), { recursive: true });
-                    await avatar.mv(path.join(avatarFullPath, newPhotoName));
+                await fs.mkdir(path.join(avatarFullPath), { recursive: true });
+                await avatar.mv(path.join(avatarFullPath, newPhotoName));
 
-                    await studentService.updateSingleStudentAvatar(photoPath, newStudent.dataValues.id, transaction);
-                    await transaction.commit();
-                } catch (e) {
-                    await transaction.rollback();
-                    next(e);
-                }
+                await studentService.updateSingleStudentAvatar(photoPath, newStudent.dataValues.id, transaction);
             }
 
             delete newStudent.dataValues.password;
@@ -67,24 +61,19 @@ module.exports = {
             const { password, ...user } = req.body;
             const avatar = req.studentsPhoto;
 
-            try {
-                if (avatar) {
-                    const photoExtension = avatar.name.split('.').pop();
-                    const newPhotoName = `${uuid}.${photoExtension}`;
-                    const avatarPathWithoutPublic = path.join('users', `${studentId}`, 'avatar');
-                    const avatarFullPath = path.join(process.cwd(), 'public', avatarPathWithoutPublic);
-                    const photoPath = path.join(avatarPathWithoutPublic, newPhotoName);
+            if (avatar) {
+                const photoExtension = avatar.name.split('.').pop();
+                const newPhotoName = `${uuid}.${photoExtension}`;
+                const avatarPathWithoutPublic = path.join('users', `${studentId}`, 'avatar');
+                const avatarFullPath = path.join(process.cwd(), 'public', avatarPathWithoutPublic);
+                const photoPath = path.join(avatarPathWithoutPublic, newPhotoName);
 
-                    await fs.rmdir(path.join(avatarPathWithoutPublic), { recursive: true });
-                    await fs.mkdir(path.join(avatarFullPath), { recursive: true });
-                    await avatar.mv(path.join(avatarFullPath, newPhotoName));
+                await fs.rmdir(path.join(avatarPathWithoutPublic), { recursive: true });
+                await fs.mkdir(path.join(avatarFullPath), { recursive: true });
+                await avatar.mv(path.join(avatarFullPath, newPhotoName));
 
-                    await studentService.updateSingleStudentAvatar(photoPath, studentId, transaction);
-                    await transaction.commit();
-                }
-            } catch (e) {
-                await transaction.rollback();
-                next(e);
+                await studentService.updateSingleStudentAvatar(photoPath, studentId, transaction);
+                await transaction.commit();
             }
 
             if (!password) {
